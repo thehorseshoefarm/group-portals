@@ -154,7 +154,18 @@ dialog.m::backdrop{background:rgba(39,37,95,.45)}
 .m-f{padding:14px 24px;border-top:1px solid var(--line);display:flex;gap:10px;justify-content:flex-end;align-items:center}
 .err{color:#9B2C2C;font-size:13.5px;margin-right:auto}
 .diet .dg{margin-bottom:12px}.diet .dl{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:8px}
-.tools{display:flex;gap:8px;flex-wrap:wrap}.tools[hidden]{display:none}#waivers[hidden],#nav-waivers[hidden]{display:none}.chip.ok{background:#E6F2E8;color:#2F6B3A}
+.tools{display:flex;gap:8px;flex-wrap:wrap}.tools[hidden]{display:none}#waivers[hidden],#nav-waivers[hidden]{display:none}
+ol.flow{list-style:none;margin:18px 0 0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;counter-reset:st}
+ol.flow li{background:#fff;border-radius:5px;box-shadow:0 6px 10px -6px rgba(0,0,0,.18);padding:16px 16px 14px;display:flex;flex-direction:column;gap:6px;counter-increment:st}
+ol.flow li .num{width:28px;height:28px;border-radius:50%;background:var(--soft);color:var(--navy);font:700 13px var(--sans);display:flex;align-items:center;justify-content:center}
+ol.flow li .num:before{content:counter(st)}
+ol.flow li.done .num{background:var(--navy);color:#fff}ol.flow li.done .num:before{content:"\2713"}
+ol.flow li b{font-family:var(--serif);font-weight:500;font-size:18px;color:var(--ink)}
+ol.flow li .d{font-size:13.5px;color:var(--ink-3);flex:1}
+ol.flow li .s{font-size:12.5px;font-weight:700;color:var(--navy)}
+ol.flow li a{font:600 12px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--navy)}
+@media (max-width:1000px){ol.flow{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){ol.flow{grid-template-columns:1fr}}.chip.ok{background:#E6F2E8;color:#2F6B3A}
 dialog.sheet{width:min(1400px,97vw)}
 .sheet-wrap{overflow:auto;max-height:62vh;border:1px solid var(--line);border-radius:6px}
 table.sh{border-collapse:collapse;font-size:13.5px;min-width:100%}
@@ -204,11 +215,19 @@ pre.q{white-space:pre-wrap;font:500 14px/1.55 var(--sans);background:#FAF7EF;bor
     <h1 id="h-title">Welcome</h1>
     <p>On behalf of the entire Horse Shoe Farm Family, welcome.</p>
     <p>This page is for you as the organizer. Add your guests, tell us who stays where, and update it any time before editing closes. Your event team at The Farm sees every change.</p>
-    <div class="actions"><a class="btn btn-cream" href="#guests">Open your guest list</a><a class="btn btn-navy" style="background:transparent;box-shadow:inset 0 0 0 1px rgba(250,247,239,.5)" href="#schedule">See the schedule</a></div>
+    <div class="actions"><a class="btn btn-cream" href="#start">Start here</a><a class="btn btn-navy" style="background:transparent;box-shadow:inset 0 0 0 1px rgba(250,247,239,.5)" href="#schedule">See the schedule</a></div>
   </div>
 </section>
 
 <main>
+
+<section class="block" id="start">
+  <span class="eyebrow">Start here</span>
+  <h2>Getting your group ready, step by step</h2>
+  <p class="lead">Everything for your stay lives on this page. Work through these steps in any order and come back as often as you like. Your event team at The Farm sees each change as you make it.</p>
+  <ol class="flow" id="flow"></ol>
+  <p class="hint" id="flow-close" style="margin-top:12px;font-size:13.5px"></p>
+</section>
 
 <section class="block" id="glance">
   <span class="eyebrow">Your stay at a glance</span>
@@ -228,6 +247,26 @@ pre.q{white-space:pre-wrap;font:500 14px/1.55 var(--sans);background:#FAF7EF;bor
   <div class="card" id="sched"></div>
 </section>
 
+<section class="block" id="email">
+  <span class="eyebrow">Start with one email</span>
+  <h2>Email your group</h2>
+  <p class="lead">One email gathers everything: the details we need from each guest and the link to sign the guest waiver. Edit anything you like, then copy it into your own email or open it in your email app.</p>
+  <div class="card">
+    <div class="f" style="display:grid;gap:14px">
+      <label class="l">Subject<input id="em-subj" maxlength="200"></label>
+      <label class="l">Message<textarea id="em-body" style="min-height:420px;font-size:14.5px;line-height:1.55"></textarea></label>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px">
+      <span class="hint" id="em-msg" style="margin-right:auto"></span>
+      <button type="button" class="linkbtn" id="em-reset">Start over</button>
+      <button type="button" class="btn btn-ghost" id="em-tpl">Download a spreadsheet template</button>
+      <a class="btn btn-ghost" id="em-open" href="#">Open in my email</a>
+      <button type="button" class="btn btn-navy" id="em-copy">Copy the email</button>
+    </div>
+    <p class="hint" style="margin-top:12px">Prefer a spreadsheet? Send the template instead, then bring the answers back with <b>Paste your list</b> in the guest list below.</p>
+  </div>
+</section>
+
 <section class="block" id="guests">
   <span class="eyebrow">Your guest list</span>
   <h2>Who's coming</h2>
@@ -242,7 +281,7 @@ pre.q{white-space:pre-wrap;font:500 14px/1.55 var(--sans);background:#FAF7EF;bor
   <div class="card">
     <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px">
       <h3 style="font-size:20px">Guests</h3>
-      <div class="tools" id="g-tools"><button class="btn btn-ghost" id="ask-group">Questions for your group</button><button class="btn btn-ghost" id="paste-open">Paste your list</button><button class="btn btn-ghost" id="sheet-open">Spreadsheet view</button><button class="btn btn-navy" id="add-guest">Add a guest</button></div>
+      <div class="tools" id="g-tools"><a class="btn btn-ghost" href="#email">Email your group</a><button class="btn btn-ghost" id="paste-open">Paste your list</button><button class="btn btn-ghost" id="sheet-open">Spreadsheet view</button><button class="btn btn-navy" id="add-guest">Add a guest</button></div>
     </div>
     <div style="overflow-x:auto"><table class="gl"><thead><tr><th>Guest</th><th>Room</th><th class="hide-m">Arriving</th><th class="hide-m">At the table</th><th></th></tr></thead><tbody id="g-body"></tbody></table></div>
   </div>
@@ -390,14 +429,6 @@ pre.q{white-space:pre-wrap;font:500 14px/1.55 var(--sans);background:#FAF7EF;bor
   <div class="m-f"><span class="err" id="paste-err"></span><button type="button" class="btn btn-ghost" data-pclose>Cancel</button><button type="button" class="btn btn-navy" id="paste-go">Add to my list</button></div>
 </dialog>
 
-<dialog class="m" id="askdlg">
-  <div class="m-h"><h3>Questions for your group</h3><button type="button" class="linkbtn" data-aclose>Close</button></div>
-  <div class="m-b">
-    <p class="hint" style="margin:0 0 12px;font-size:13.5px">Send these to your guests, or use the spreadsheet template to collect answers. When you have them, paste the template straight into <b>Paste your list</b>.</p>
-    <pre class="q" id="ask-text"></pre>
-  </div>
-  <div class="m-f"><span class="err" id="ask-msg" style="color:var(--ink-2)"></span><button type="button" class="btn btn-ghost" id="ask-tpl">Download the template</button><button type="button" class="btn btn-navy" id="ask-copy">Copy the questions</button></div>
-</dialog>
 
 <script>
 (function(){
@@ -506,7 +537,7 @@ function render(){
       "<td style='white-space:nowrap;text-align:right'>"+(G.open?"<button class='linkbtn' data-edit='"+esc(g.id)+"'>Edit</button><button class='linkbtn danger' data-del='"+esc(g.id)+"'>Remove</button>":"")+"</td></tr>"}).join("")
     :"<tr><td colspan='5' class='empty'>No guests yet. Add your first guest to get started.</td></tr>";
   var homes=[];S.rooms.forEach(function(r){if(homes.indexOf(r.Home)<0)homes.push(r.Home)});
-  fillNotes();fillWaivers();
+  fillNotes();fillWaivers();fillFlow();fillEmail();
   $("#rooms-board").innerHTML=homes.map(function(h){return "<div class='card home'><h3>"+esc(h)+"</h3>"+S.rooms.filter(function(r){return r.Home===h}).map(function(r){
     var gs=S.guests.filter(function(g){return g.Home===h&&g.Room===r.Room});
     return "<div class='rm'><div><b>"+esc(r.Room)+"</b><div style='font-size:12.5px;color:var(--ink-3)'>"+esc(r.Beds)+" · sleeps "+esc(r.Sleeps)+"</div></div><div class='who'>"+(gs.length?gs.map(function(g){return esc(g["First name"]+" "+g["Last name"])}).join("<br>"):"<span class='open'>Open</span>")+"</div></div>"}).join("")+"</div>"}).join("");
@@ -753,25 +784,48 @@ $("#paste-go").addEventListener("click",function(){var rows=parseTable($("#paste
   pasteDlg.close();openSheet();var n=fillFrom(rows,0,0);renderSheet();
   $("#sheet-msg").textContent=n+" guest"+(n===1?"":"s")+" added from your list. Check them, choose rooms, then save.";});
 
-/* ---------- Questions for your group ---------- */
-var askDlg=$("#askdlg");
+/* ---------- Email your group ---------- */
 var TPL=["First name","Last name","Email","Mobile","Arrival date","Arrival time","How you're traveling","Airport and flight","Dietary needs","Food allergies","Accessibility needs","Celebrations or notes"];
-function askText(){var a=C&&C.arrive?nice(C.arrive,true):"[arrival date]",d=C&&C.depart?nice(C.depart,true):"[departure date]";
-  return "We're heading to The Horse Shoe Farm in Hendersonville, NC, "+a+" to "+d+". To get everything ready, please send me:\n\n"+
-  "1. Your first and last name\n2. Your email\n3. Your mobile number\n4. The day you'll arrive and about what time (check-in is from 4:00 pm)\n"+
-  "5. How you're traveling: driving, or flying (and your airport and flight)\n"+
-  "6. Dietary needs: vegetarian, vegan, pescatarian, gluten free, dairy free, no pork, no red meat, kosher style, halal, or none\n"+
-  "7. Any food allergies, and how serious they are\n8. Any accessibility needs\n9. Anything we're celebrating, like a birthday or anniversary"+
-  (S&&S.group&&S.group.waiverLink?"\n\nAlso, please sign The Farm's guest waiver before we go, using the same name you send me:\n"+S.group.waiverLink:"");}
-$("#ask-group").addEventListener("click",function(){$("#ask-text").textContent=askText();$("#ask-msg").textContent="";askDlg.showModal()});
-askDlg.querySelectorAll("[data-aclose]").forEach(function(b){b.addEventListener("click",function(){askDlg.close()})});
-$("#ask-copy").addEventListener("click",function(){var t=askText();
-  (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){$("#ask-msg").textContent="Copied. Paste it into your email or message."})
-  .catch(function(){var r=document.createRange();r.selectNodeContents($("#ask-text"));var s=getSelection();s.removeAllRanges();s.addRange(r);$("#ask-msg").textContent="Selected. Press Ctrl+C or Cmd+C to copy."})});
-$("#ask-tpl").addEventListener("click",function(){
+var EM_EDITED=false;
+function replyBy(){var c=pd(S&&S.group&&S.group.closes);if(!c)return "[reply-by date]";c.setDate(c.getDate()-3);return DOW[c.getDay()]+", "+MONL[c.getMonth()]+" "+c.getDate()}
+function emailSubject(){return "Our stay at The Horse Shoe Farm: a few details from you"}
+function emailBody(){var a=C&&C.arrive?nice(C.arrive,true):"[arrival date]",d=C&&C.depart?nice(C.depart,true):"[departure date]",w=S&&S.group&&S.group.waiverLink;
+  return "Hi everyone,\n\n"+
+  "I'm so glad you're joining us at The Horse Shoe Farm in Hendersonville, NC, "+a+" to "+d+". To help The Farm get everything ready for us, please reply to this email by "+replyBy()+" with:\n\n"+
+  "1. Your first and last name\n2. Your email\n3. Your mobile number\n4. The day you'll arrive and about what time\n"+
+  "5. How you're traveling: driving, or flying (with your airport and flight)\n"+
+  "6. Any dietary needs: vegetarian, vegan, pescatarian, gluten free, dairy free, no pork, no red meat, kosher style, halal, or none\n"+
+  "7. Any food allergies, and how serious they are\n8. Any accessibility needs\n9. Anything we're celebrating, like a birthday or anniversary\n\n"+
+  (w?"Please also sign The Farm's guest waiver before we go. Use the same name you send me so it matches our list:\n"+w+"\n\n":"")+
+  "A few good things to know:\n- Check-in is from 4:00 pm at The Welcome Barn, and check-out is 10:00 am.\n- The address is 155 Horse Shoe Farm Drive, Hendersonville, NC 28791.\n\n"+
+  "Thank you, and I can't wait to see you there!\n\n"+(who()||"[Your name]");}
+function fillEmail(force){if(EM_EDITED&&!force)return;$("#em-subj").value=emailSubject();$("#em-body").value=emailBody();EM_EDITED=false;setMailto()}
+function setMailto(){$("#em-open").href="mailto:?subject="+encodeURIComponent($("#em-subj").value)+"&body="+encodeURIComponent($("#em-body").value)}
+["#em-subj","#em-body"].forEach(function(id){$(id).addEventListener("input",function(){EM_EDITED=true;setMailto()})});
+$("#em-reset").addEventListener("click",function(){fillEmail(true);$("#em-msg").textContent="Back to the original email."});
+$("#em-copy").addEventListener("click",function(){var t="Subject: "+$("#em-subj").value+"\n\n"+$("#em-body").value;
+  (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){$("#em-msg").textContent="Copied. Paste it into a new email to your group."})
+  .catch(function(){$("#em-body").select();$("#em-msg").textContent="Selected. Press Ctrl+C or Cmd+C to copy."})});
+$("#em-open").addEventListener("click",function(){setMailto();$("#em-msg").textContent="Opening your email app. Add your group in the To or Bcc line."});
+$("#em-tpl").addEventListener("click",function(){
   var csv="﻿"+TPL.map(function(h){return '"'+h.replace(/"/g,'""')+'"'}).join(",")+"\r\n";
   var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download=((C&&C.shortName)||"Group").replace(/[^\w ]/g,"")+" guest details.csv";document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},500);
-  $("#ask-msg").textContent="Template downloaded. Open it in Excel or Google Sheets.";});
+  $("#em-msg").textContent="Template downloaded. Open it in Excel or Google Sheets.";});
+
+/* ---------- Step-by-step flow ---------- */
+function fillFlow(){var G=S.group,exp=G.expected||C.expected||S.guests.length||0,n=S.guests.length,
+    placed=S.guests.filter(function(g){return g.Room}).length,signed=S.guests.filter(function(g){return g.waiver}).length,
+    notes=G.notes&&(G.notes.about||G.notes.needs||G.notes.other),of=function(x){return x+" of "+(exp||n)};
+  var steps=[
+    {t:"Email your group",d:"Send one email with our questions and the waiver link.",s:"Ready to send",href:"#email",go:"Write the email"},
+    {t:"Add your guests",d:"Paste your list, use the spreadsheet view, or add guests one at a time.",s:of(n)+" added",done:exp&&n>=exp,href:"#guests",go:"Open the guest list"},
+    {t:"Choose rooms",d:"Pick a room for each guest. Full rooms are greyed out.",s:of(placed)+" placed",done:exp&&placed>=exp,href:"#rooms",go:"See the rooms"}];
+  if(G.waiverLink)steps.push({t:"Collect waivers",d:"Every guest signs before arriving or at check-in.",s:of(signed)+" signed",done:exp&&signed>=exp,href:"#waivers",go:"Waiver link"});
+  steps.push({t:"Tell us about your group",d:"Anything that helps our team welcome you.",s:notes?"Shared":"Not yet",done:!!notes,href:"#about",go:"Add notes"});
+  $("#flow").style.gridTemplateColumns=window.innerWidth>1000?"repeat("+steps.length+",minmax(0,1fr))":"";
+  $("#flow").innerHTML=steps.map(function(x){return "<li class='"+(x.done?"done":"")+"'><span class='num'></span><b>"+esc(x.t)+"</b><span class='d'>"+esc(x.d)+"</span><span class='s'>"+esc(x.s)+"</span><a href='"+x.href+"'>"+esc(x.go)+" →</a></li>"}).join("");
+  $("#flow-close").textContent=G.open?(G.closes?"Your guest list stays open until "+nice(G.closes,true)+". After that, call (828) 393-3034, ext 4, or email sales@thehorseshoefarm.com with changes.":""):"Your guest list has closed. For changes, call (828) 393-3034, ext 4, or email sales@thehorseshoefarm.com.";
+}
 
 /* ---------- Notes about the group ---------- */
 var nf=$("#notes-form"),NOTES_DIRTY=false;
