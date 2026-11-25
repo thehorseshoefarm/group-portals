@@ -291,6 +291,7 @@ pre.q{white-space:pre-wrap;font:500 14px/1.55 var(--sans);background:#FAF7EF;bor
   <span class="eyebrow">Before you arrive</span>
   <h2>Guest waivers</h2>
   <p class="lead">Every guest signs The Farm's liability waiver. Share this link with your group so each guest can sign before arriving; anyone who hasn't can sign at check-in. Parents or guardians sign for guests under 18.</p>
+  <div class="notice-bar info" style="margin:-4px 0 18px"><b>Haven't shared rooms with your guests yet?</b> The waiver asks where each guest is staying. If they don't know, they can choose any house or space on the list. We place everyone from the rooms on your guest list, not from the waiver.</div>
   <div class="grid g2" style="align-items:start">
     <div class="card">
       <div class="prog" style="grid-template-columns:1fr;margin:0 0 14px"><div><div class="n" id="p-waiver" style="font-family:var(--serif);font-size:28px;color:var(--ink);line-height:1">0 of 10</div><div class="l" style="font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);margin-top:6px">Waivers signed</div><div class="bar"><i id="b-waiver" style="width:0"></i></div></div></div>
@@ -796,7 +797,7 @@ function emailBody(){var a=C&&C.arrive?nice(C.arrive,true):"[arrival date]",d=C&
   "5. How you're traveling: driving, or flying (with your airport and flight)\n"+
   "6. Any dietary needs: vegetarian, vegan, pescatarian, gluten free, dairy free, no pork, no red meat, kosher style, halal, or none\n"+
   "7. Any food allergies, and how serious they are\n8. Any accessibility needs\n9. Anything we're celebrating, like a birthday or anniversary\n\n"+
-  (w?"Please also sign The Farm's guest waiver before we go. Use the same name you send me so it matches our list:\n"+w+"\n\n":"")+
+  (w?"Please also sign The Farm's guest waiver before we go. Use the same name you send me so it matches our list. When it asks where you're staying, choose any house or space if you don't know yet:\n"+w+"\n\n":"")+
   "A few good things to know:\n- Check-in is from 4:00 pm at The Welcome Barn, and check-out is 10:00 am.\n- The address is 155 Horse Shoe Farm Drive, Hendersonville, NC 28791.\n\n"+
   "Thank you, and I can't wait to see you there!\n\n"+(who()||"[Your name]");}
 function fillEmail(force){if(EM_EDITED&&!force)return;$("#em-subj").value=emailSubject();$("#em-body").value=emailBody();EM_EDITED=false;setMailto()}
