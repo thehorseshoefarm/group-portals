@@ -154,7 +154,7 @@ dialog.m::backdrop{background:rgba(39,37,95,.45)}
 .m-f{padding:14px 24px;border-top:1px solid var(--line);display:flex;gap:10px;justify-content:flex-end;align-items:center}
 .err{color:#9B2C2C;font-size:13.5px;margin-right:auto}
 .diet .dg{margin-bottom:12px}.diet .dl{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:8px}
-.tools{display:flex;gap:8px;flex-wrap:wrap}.tools[hidden]{display:none}
+.tools{display:flex;gap:8px;flex-wrap:wrap}.tools[hidden]{display:none}#waivers[hidden],#nav-waivers[hidden]{display:none}.chip.ok{background:#E6F2E8;color:#2F6B3A}
 dialog.sheet{width:min(1400px,97vw)}
 .sheet-wrap{overflow:auto;max-height:62vh;border:1px solid var(--line);border-radius:6px}
 table.sh{border-collapse:collapse;font-size:13.5px;min-width:100%}
@@ -193,7 +193,7 @@ pre.q{white-space:pre-wrap;font:500 14px/1.55 var(--sans);background:#FAF7EF;bor
   <div class="top-in">
     <img src="assets/logo.webp" alt="The Horse Shoe Farm · Lodging · Dining · Spa">
     <nav class="main" aria-label="Your group">
-      <a href="#glance">Your Stay</a><a href="#schedule">Schedule</a><a href="#guests">Guest List</a><a href="#about">About Your Group</a><a href="#rooms">Rooms</a><a href="#spa">Spa</a><a href="#know">Know Before You Go</a>
+      <a href="#glance">Your Stay</a><a href="#schedule">Schedule</a><a href="#guests">Guest List</a><a href="#waivers" id="nav-waivers" hidden>Waivers</a><a href="#about">Your Group</a><a href="#rooms">Rooms</a><a href="#spa">Spa</a><a href="#know">Know Before You Go</a>
     </nav>
   </div>
 </header>
@@ -245,6 +245,21 @@ pre.q{white-space:pre-wrap;font:500 14px/1.55 var(--sans);background:#FAF7EF;bor
       <div class="tools" id="g-tools"><button class="btn btn-ghost" id="ask-group">Questions for your group</button><button class="btn btn-ghost" id="paste-open">Paste your list</button><button class="btn btn-ghost" id="sheet-open">Spreadsheet view</button><button class="btn btn-navy" id="add-guest">Add a guest</button></div>
     </div>
     <div style="overflow-x:auto"><table class="gl"><thead><tr><th>Guest</th><th>Room</th><th class="hide-m">Arriving</th><th class="hide-m">At the table</th><th></th></tr></thead><tbody id="g-body"></tbody></table></div>
+  </div>
+</section>
+
+<section class="block" id="waivers" hidden>
+  <span class="eyebrow">Before you arrive</span>
+  <h2>Guest waivers</h2>
+  <p class="lead">Every guest signs The Farm's liability waiver. Share this link with your group so each guest can sign before arriving; anyone who hasn't can sign at check-in. Parents or guardians sign for guests under 18.</p>
+  <div class="grid g2" style="align-items:start">
+    <div class="card">
+      <div class="prog" style="grid-template-columns:1fr;margin:0 0 14px"><div><div class="n" id="p-waiver" style="font-family:var(--serif);font-size:28px;color:var(--ink);line-height:1">0 of 10</div><div class="l" style="font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);margin-top:6px">Waivers signed</div><div class="bar"><i id="b-waiver" style="width:0"></i></div></div></div>
+      <label class="l">Your group's waiver link<input id="waiver-url" readonly onclick="this.select()"></label>
+      <div class="tools" style="margin-top:12px"><button class="btn btn-navy" id="waiver-copy" type="button">Copy the link</button><a class="btn btn-ghost" id="waiver-open" target="_blank" rel="noopener">Open the waiver</a></div>
+      <p class="hint" id="waiver-msg" style="margin-top:10px"></p>
+    </div>
+    <div class="card"><h3 style="font-size:18px;margin-bottom:8px">Still to sign</h3><div id="waiver-todo" style="font-size:14.5px;color:var(--ink-2)"></div><p class="hint" style="margin-top:10px">As guests sign, we check them off here. Ask each guest to use the same name you entered on your guest list.</p></div>
   </div>
 </section>
 
@@ -464,7 +479,7 @@ function fakeSave(b){if(!b)return JSON.parse(JSON.stringify(S));var g=b.guest||{
 function status(m,kind){var b=$("#status-bar");b.textContent=m;b.hidden=!m;b.className="notice-bar "+(kind||"info")}
 function start(){
   fill();
-  if(PREVIEW){$("#preview-bar").hidden=false;S={ok:true,group:{name:C.group,expected:C.expected,eventOwner:C.owner,closes:C.closes,open:true},rooms:C.previewRooms||[],guests:[]};render();return}
+  if(PREVIEW){$("#preview-bar").hidden=false;S={ok:true,group:{name:C.group,expected:C.expected,eventOwner:C.owner,closes:C.closes,open:true,waiverLink:"https://app.waiversign.com/ (sample link)"},rooms:C.previewRooms||[],guests:[]};render();return}
   status("Loading your guest list…");
   api("GET").then(function(d){if(!d||!d.ok)throw d;S=d;status("");render()})
   .catch(function(){status("We couldn't load your guest list just now. Refresh the page in a moment, or call us at (828) 393-3034, ext 4.","closed")});
@@ -484,14 +499,14 @@ function render(){
   var rows=S.guests.slice().sort(function(a,b){return (a["Last name"]+a["First name"]).localeCompare(b["Last name"]+b["First name"])});
   $("#g-body").innerHTML=rows.length?rows.map(function(g){
     var meals=(g.Meals||"").split(";").filter(function(s){return s.trim()}).length;
-    return "<tr><td><b>"+esc(g["First name"]+" "+g["Last name"])+"</b>"+(g["Dietary needs"]?"<div class='sub'>"+esc(g["Dietary needs"])+"</div>":"")+(g.Allergy||hasAllergy(g["Dietary needs"])?" <span class='chip warn'>Allergy</span>":"")+"</td>"+
+    return "<tr><td><b>"+esc(g["First name"]+" "+g["Last name"])+"</b>"+(g["Dietary needs"]?"<div class='sub'>"+esc(g["Dietary needs"])+"</div>":"")+(g.Allergy||hasAllergy(g["Dietary needs"])?" <span class='chip warn'>Allergy</span>":"")+(S.group.waiverLink&&g.waiver?" <span class='chip ok'>Waiver signed</span>":"")+"</td>"+
       "<td>"+(g.Room?esc(g.Room)+"<div class='sub'>"+esc(g.Home)+"</div>":"<span class='chip warn'>Not placed</span>")+"</td>"+
       "<td class='hide-m'>"+esc(nice(g["Arrival date"]))+(g["Arrival time"]?"<div class='sub'>"+esc(g["Arrival time"])+"</div>":"")+"</td>"+
       "<td class='hide-m'>"+(meals?meals+" meal"+(meals===1?"":"s"):"<span class='sub'>Not chosen</span>")+"</td>"+
       "<td style='white-space:nowrap;text-align:right'>"+(G.open?"<button class='linkbtn' data-edit='"+esc(g.id)+"'>Edit</button><button class='linkbtn danger' data-del='"+esc(g.id)+"'>Remove</button>":"")+"</td></tr>"}).join("")
     :"<tr><td colspan='5' class='empty'>No guests yet. Add your first guest to get started.</td></tr>";
   var homes=[];S.rooms.forEach(function(r){if(homes.indexOf(r.Home)<0)homes.push(r.Home)});
-  fillNotes();
+  fillNotes();fillWaivers();
   $("#rooms-board").innerHTML=homes.map(function(h){return "<div class='card home'><h3>"+esc(h)+"</h3>"+S.rooms.filter(function(r){return r.Home===h}).map(function(r){
     var gs=S.guests.filter(function(g){return g.Home===h&&g.Room===r.Room});
     return "<div class='rm'><div><b>"+esc(r.Room)+"</b><div style='font-size:12.5px;color:var(--ink-3)'>"+esc(r.Beds)+" · sleeps "+esc(r.Sleeps)+"</div></div><div class='who'>"+(gs.length?gs.map(function(g){return esc(g["First name"]+" "+g["Last name"])}).join("<br>"):"<span class='open'>Open</span>")+"</div></div>"}).join("")+"</div>"}).join("");
@@ -746,7 +761,8 @@ function askText(){var a=C&&C.arrive?nice(C.arrive,true):"[arrival date]",d=C&&C
   "1. Your first and last name\n2. Your email\n3. Your mobile number\n4. The day you'll arrive and about what time (check-in is from 4:00 pm)\n"+
   "5. How you're traveling: driving, or flying (and your airport and flight)\n"+
   "6. Dietary needs: vegetarian, vegan, pescatarian, gluten free, dairy free, no pork, no red meat, kosher style, halal, or none\n"+
-  "7. Any food allergies, and how serious they are\n8. Any accessibility needs\n9. Anything we're celebrating, like a birthday or anniversary";}
+  "7. Any food allergies, and how serious they are\n8. Any accessibility needs\n9. Anything we're celebrating, like a birthday or anniversary"+
+  (S&&S.group&&S.group.waiverLink?"\n\nAlso, please sign The Farm's guest waiver before we go, using the same name you send me:\n"+S.group.waiverLink:"");}
 $("#ask-group").addEventListener("click",function(){$("#ask-text").textContent=askText();$("#ask-msg").textContent="";askDlg.showModal()});
 askDlg.querySelectorAll("[data-aclose]").forEach(function(b){b.addEventListener("click",function(){askDlg.close()})});
 $("#ask-copy").addEventListener("click",function(){var t=askText();
@@ -774,6 +790,18 @@ nf.addEventListener("submit",function(e){e.preventDefault();
     S=d;NOTES_DIRTY=false;render();$("#notes-msg").textContent="Saved. Your event team can see it now.";
   }).catch(function(){btn.disabled=false;$("#notes-msg").textContent="We couldn't reach The Farm just now. Try again in a moment."});
 });
+
+/* ---------- Waivers ---------- */
+function fillWaivers(){var G=S.group,on=!!G.waiverLink;$("#waivers").hidden=!on;$("#nav-waivers").hidden=!on;if(!on)return;
+  var exp=G.expected||C.expected||S.guests.length||0,signed=S.guests.filter(function(g){return g.waiver}).length;
+  $("#p-waiver").textContent=signed+" of "+(exp||S.guests.length);$("#b-waiver").style.width=pct(signed,exp||S.guests.length)+"%";
+  $("#waiver-url").value=G.waiverLink;$("#waiver-open").href=G.waiverLink;
+  var todo=S.guests.filter(function(g){return !g.waiver}).sort(function(a,b){return (a["Last name"]+a["First name"]).localeCompare(b["Last name"]+b["First name"])});
+  $("#waiver-todo").innerHTML=!S.guests.length?"<span class='sub'>Add your guests to see who still needs to sign.</span>":todo.length?todo.map(function(g){return esc(g["First name"]+" "+g["Last name"])}).join("<br>"):"Everyone on your list has signed.";
+}
+$("#waiver-copy").addEventListener("click",function(){var u=$("#waiver-url").value;
+  (navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(function(){$("#waiver-msg").textContent="Copied. Paste it into your email or group message."})
+  .catch(function(){$("#waiver-url").select();$("#waiver-msg").textContent="Selected. Press Ctrl+C or Cmd+C to copy."})});
 })();
 </script>
 
