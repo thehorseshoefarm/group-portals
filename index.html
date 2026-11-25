@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Your Group at The Horse Shoe Farm</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&family=Playfair+Display:wght@400;500&family=Cormorant+Garamond:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#FAF7EF;--white:#fff;--ink:#222;--ink-2:#353535;--ink-3:#6b6b6b;--navy:#283A91;--indigo:#27255F;--ring:rgba(40,58,145,.443);--soft:#E9EBF5;--line:rgba(53,53,53,.12);--line-2:rgba(53,53,53,.06);--shadow:0 6px 10px -6px rgba(0,0,0,.18);
+--serif:"Playfair Display",Georgia,serif;--display:"Cormorant Garamond",Georgia,serif;--sans:"Raleway",system-ui,sans-serif}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--cream);color:var(--ink-2);font-family:var(--sans);font-size:16px;line-height:1.55}
+h1,h2,h3{font-family:var(--serif);font-weight:400;color:var(--ink-2);margin:0;letter-spacing:-.01em}
+a{color:var(--navy)}
+.eyebrow{font-weight:700;text-transform:uppercase;letter-spacing:.2em;font-size:11.5px;color:var(--navy)}
+.btn{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:10px;cursor:pointer;font-family:var(--sans);font-weight:600;text-transform:uppercase;letter-spacing:.13em;font-size:12.5px;padding:13px 20px;text-decoration:none;transition:box-shadow .18s}
+.btn-navy{background:var(--navy);color:#fff}.btn-navy:hover,.btn-navy:focus-visible{box-shadow:0 0 0 5.5px var(--ring);outline:none}
+.btn-cream{background:var(--cream);color:#000}.btn-cream:hover{box-shadow:0 0 0 4px rgba(250,247,239,.6)}
+.btn-ghost{background:#fff;color:var(--navy);border:1px solid var(--ring)}
+/* gate */
+.gate{position:fixed;inset:0;z-index:100;background:var(--cream);display:flex;align-items:center;justify-content:center;padding:24px}
+.gate[hidden]{display:none}
+.gate-card{background:#fff;border-radius:6px;box-shadow:0 18px 40px -18px rgba(39,37,95,.35);padding:36px 30px;max-width:420px;width:100%;text-align:center}
+.gate-card img{height:84px;width:auto}
+.gate-card h1{font-size:26px;margin:18px 0 6px}
+.gate-card p{color:var(--ink-3);font-size:14.5px;margin:0 0 18px}
+.gate-card input{width:100%;font:inherit;padding:12px 14px;border:1px solid var(--line);border-radius:10px;margin-bottom:12px;text-align:center}
+.gate-card input:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 3px var(--soft)}
+.gate-err{color:#9B2C2C;font-size:13.5px;min-height:20px}
+/* header */
+header.top{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.72);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);box-shadow:0 8px 18px -16px rgba(34,34,34,.9)}
+.top-in{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:20px;padding:8px 24px}
+.top-in img{height:58px;width:auto;display:block}
+nav.main{display:flex;gap:2px;flex:1;justify-content:flex-end;flex-wrap:wrap}
+nav.main a{font-family:var(--display);font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:15px;color:var(--ink);text-decoration:none;padding:6px 10px}
+nav.main a:hover{color:var(--navy)}
+/* hero */
+.hero{background:var(--indigo);color:var(--cream);position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(1100px 320px at 85% 120%,rgba(250,247,239,.10),transparent 60%),repeating-linear-gradient(90deg,transparent 0 118px,rgba(250,247,239,.035) 118px 120px)}
+.hero-in{position:relative;max-width:1080px;margin:0 auto;padding:56px 24px 50px}
+.hero .eyebrow{color:rgba(250,247,239,.75)}
+.hero h1{color:var(--cream);font-size:clamp(32px,4.4vw,48px);line-height:1.1;margin:12px 0 14px}
+.hero p{max-width:640px;color:rgba(250,247,239,.88);margin:0 0 10px;font-size:17px}
+.hero .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+main{max-width:1080px;margin:0 auto;padding:12px 24px 80px}
+section.block{padding:44px 0 8px;scroll-margin-top:90px}
+section.block > .eyebrow{display:block;margin-bottom:8px}
+section.block > h2{font-size:clamp(26px,3vw,34px);margin-bottom:8px}
+.lead{color:var(--ink-3);max-width:680px;margin:0 0 22px}
+.card{background:#fff;border-radius:5px;box-shadow:var(--shadow);padding:22px 24px}
+.grid{display:grid;gap:18px}.g2{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:repeat(3,minmax(0,1fr))}.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.fact .k{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+.fact .v{font-family:var(--serif);font-size:22px;color:var(--ink);margin-top:6px;line-height:1.25}
+.fact .s{font-size:13.5px;color:var(--ink-3);margin-top:4px}
+/* schedule */
+.day{display:grid;grid-template-columns:120px 1fr;gap:18px;padding:18px 0;border-top:1px solid var(--line)}
+.day:first-child{border-top:0}
+.datebadge{width:64px;text-align:center;background:var(--cream);border-radius:4px;padding:7px 0 8px;box-shadow:inset 0 0 0 1px var(--line)}
+.datebadge .dw{font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+.datebadge .dy{font-family:var(--serif);font-size:26px;line-height:1;color:var(--ink)}
+.datebadge .mo{font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+.ev{display:grid;grid-template-columns:150px 1fr;gap:12px;padding:8px 0}
+.ev .t{font-size:14px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.ev .n{font-weight:600;color:var(--ink)}
+.ev .d{font-size:14.5px;color:var(--ink-3)}
+/* homes */
+.home h3{font-size:22px;margin-bottom:4px}
+.home .tag{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+.home p{margin:12px 0 0;font-size:15px}
+.home ul{margin:12px 0 0;padding-left:18px;font-size:14.5px}
+.home li{margin:3px 0}
+/* steps */
+.steps{list-style:none;padding:0;margin:0;counter-reset:s}
+.steps li{position:relative;padding:16px 0 16px 56px;border-top:1px solid var(--line);counter-increment:s}
+.steps li:first-child{border-top:0}
+.steps li::before{content:counter(s);position:absolute;left:0;top:14px;width:36px;height:36px;border-radius:50%;background:var(--soft);color:var(--navy);font-weight:700;display:flex;align-items:center;justify-content:center;font-size:15px}
+.steps b{color:var(--ink)}
+.due{display:inline-block;margin-top:4px;font-size:12px;font-weight:700;letter-spacing:.04em;color:var(--navy);background:var(--soft);border-radius:20px;padding:2px 10px}
+/* forms */
+.tabs{display:inline-flex;background:#fff;border-radius:10px;box-shadow:var(--shadow);padding:4px;margin-bottom:18px;flex-wrap:wrap}
+.tabs button{border:0;background:none;padding:9px 16px;border-radius:8px;cursor:pointer;font:600 12px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.tabs button[aria-selected="true"]{background:var(--navy);color:#fff}
+form.f{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 16px}
+form.f .full{grid-column:1/-1}
+form.f h3{grid-column:1/-1;font-size:20px;margin-top:10px}
+label.l{display:flex;flex-direction:column;gap:6px;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+label.l input,label.l select,label.l textarea{font:500 15px var(--sans);letter-spacing:0;text-transform:none;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:8px;padding:11px 12px;width:100%}
+label.l textarea{min-height:84px;resize:vertical}
+label.l input:focus,label.l select:focus,label.l textarea:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 3px var(--soft)}
+.hint{font-size:12.5px;color:var(--ink-3);text-transform:none;letter-spacing:0;font-weight:500}
+fieldset{border:0;padding:0;margin:0}
+.checks{display:flex;flex-wrap:wrap;gap:10px 18px;font-size:14.5px;text-transform:none;letter-spacing:0;font-weight:500;color:var(--ink)}
+.checks label{display:flex;gap:8px;align-items:center;cursor:pointer}
+.checks input{accent-color:var(--navy);width:17px;height:17px}
+.room{display:grid;grid-template-columns:220px 1fr;gap:12px;align-items:start;padding:12px 0;border-top:1px solid var(--line-2)}
+.room .rn{font-weight:600;color:var(--ink)}
+.room .rb{font-size:13px;color:var(--ink-3)}
+.room input{font:500 15px var(--sans);border:1px solid var(--line);border-radius:8px;padding:10px 12px;width:100%}
+.form-foot{grid-column:1/-1;display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:6px}
+.notice{font-size:13.5px;color:var(--ink-3)}
+.thanks{background:var(--soft);color:var(--navy);border-radius:8px;padding:14px 16px;font-size:14.5px}
+.thanks[hidden]{display:none}
+/* spa */
+.spa{background:var(--indigo);color:var(--cream);border-radius:6px;padding:34px 30px;display:grid;grid-template-columns:1.2fr 1fr;gap:28px;align-items:center}
+.spa h2{color:var(--cream);font-size:clamp(24px,3vw,32px);margin:8px 0 12px}
+.spa p{color:rgba(250,247,239,.85);margin:0 0 10px}
+.spa .eyebrow{color:rgba(250,247,239,.7)}
+.credits{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.credit{background:rgba(250,247,239,.08);border:1px solid rgba(250,247,239,.22);border-radius:8px;padding:16px;text-align:center;cursor:pointer;color:var(--cream);font:inherit}
+.credit .amt{font-family:var(--serif);font-size:30px;line-height:1}
+.credit .per{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;opacity:.75;margin-top:6px}
+.credit[aria-pressed="true"]{background:var(--cream);color:var(--indigo)}
+/* know */
+dl.kv{display:grid;grid-template-columns:auto 1fr;gap:10px 22px;margin:0;font-size:15px}
+dl.kv dt{color:var(--ink-3)}dl.kv dd{margin:0;color:var(--ink);overflow-wrap:anywhere}.grid>*{min-width:0}
+footer.foot{background:var(--indigo);color:rgba(250,247,239,.78);text-align:center;padding:40px 16px 34px;font-size:13px}
+footer.foot img{height:78px;width:auto;filter:brightness(0) invert(1);opacity:.92;display:block;margin:0 auto 14px}
+footer.foot b{display:block;font-family:var(--serif);font-weight:400;color:var(--cream);font-size:17px;margin-bottom:8px}
+.preview-bar{background:#FBF0D9;color:#8A5A00;font-size:13px;text-align:center;padding:8px 14px}
+@media (max-width:860px){.g2,.g3,.g4,.spa{grid-template-columns:1fr}.day{grid-template-columns:1fr;gap:10px}.ev{grid-template-columns:1fr;gap:2px}form.f{grid-template-columns:1fr}.room{grid-template-columns:1fr}nav.main{display:none}.hero-in{padding:40px 20px 36px}main{padding:8px 18px 60px}}
+</style>
+<style>
+.notice-bar{border-radius:8px;padding:14px 16px;font-size:14.5px;margin:0 0 18px}
+.notice-bar.info{background:var(--soft);color:var(--navy)}
+.notice-bar.closed{background:#FBF0D9;color:#8A5A00}
+.notice-bar[hidden]{display:none}
+.prog{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:18px}
+.prog .card{padding:16px 18px}
+.prog .n{font-family:var(--serif);font-size:28px;color:var(--ink);line-height:1}
+.prog .l{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);margin-top:6px}
+.bar{height:6px;border-radius:6px;background:var(--line-2);margin-top:10px;overflow:hidden}.bar i{display:block;height:100%;background:var(--navy)}
+table.gl{width:100%;border-collapse:collapse;font-size:14.5px}
+table.gl th{text-align:left;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);padding:10px 8px;border-bottom:1px solid var(--line)}
+table.gl td{padding:12px 8px;border-bottom:1px solid var(--line-2);vertical-align:top}
+table.gl td .sub{font-size:12.5px;color:var(--ink-3)}
+.chip{display:inline-block;font-size:11.5px;font-weight:700;border-radius:20px;padding:2px 9px;background:var(--soft);color:var(--navy)}
+.chip.warn{background:#FBF0D9;color:#8A5A00}
+.linkbtn{background:none;border:0;color:var(--navy);font:600 13px var(--sans);cursor:pointer;padding:4px 6px;text-decoration:underline}
+.linkbtn.danger{color:#9B2C2C}
+.empty{padding:26px 10px;text-align:center;color:var(--ink-3)}
+.homes-board{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.rm{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid var(--line-2)}
+.rm:first-of-type{border-top:0}
+.rm .who{font-size:14px;color:var(--ink-2);text-align:right}
+.rm .open{color:var(--ink-3);font-style:italic}
+dialog.m{border:0;border-radius:8px;padding:0;width:min(720px,94vw);box-shadow:0 30px 60px -20px rgba(39,37,95,.45)}
+dialog.m::backdrop{background:rgba(39,37,95,.45)}
+.m-h{padding:20px 24px 6px;display:flex;justify-content:space-between;align-items:center}
+.m-h h3{font-size:22px}
+.m-b{padding:10px 24px 22px;max-height:72vh;overflow:auto}
+.m-f{padding:14px 24px;border-top:1px solid var(--line);display:flex;gap:10px;justify-content:flex-end;align-items:center}
+.err{color:#9B2C2C;font-size:13.5px;margin-right:auto}
+@media (max-width:860px){.prog,.homes-board{grid-template-columns:1fr}table.gl .hide-m{display:none}}
+</style>
+</head>
+<body>
+
+<div class="gate" id="gate">
+  <div class="gate-card">
+    <img src="assets/logo.webp" alt="The Horse Shoe Farm · Lodging · Dining · Spa">
+    <h1 id="gate-title">Your group at The Horse Shoe Farm</h1>
+    <p>Welcome. Enter the password from your Horse Shoe Farm team to see your group's page.</p>
+    <form id="gate-form"><input id="gate-pw" type="password" autocomplete="off" placeholder="Password" aria-label="Password"><button class="btn btn-navy" style="width:100%">Enter</button></form>
+    <div class="gate-err" id="gate-err" role="alert"></div>
+  </div>
+</div>
+
+<div class="preview-bar" id="preview-bar" hidden>Preview with sample guests. Nothing you enter here is saved.</div>
+
+<header class="top">
+  <div class="top-in">
+    <img src="assets/logo.webp" alt="The Horse Shoe Farm · Lodging · Dining · Spa">
+    <nav class="main" aria-label="Your group">
+      <a href="#glance">Your Stay</a><a href="#schedule">Schedule</a><a href="#guests">Guest List</a><a href="#rooms">Rooms</a><a href="#spa">Spa</a><a href="#know">Know Before You Go</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-in">
+    <div class="eyebrow" id="h-dates"></div>
+    <h1 id="h-title">Welcome</h1>
+    <p>On behalf of the entire Horse Shoe Farm Family, welcome.</p>
+    <p>This page is for you as the organizer. Add your guests, tell us who stays where, and update it any time before editing closes. Your event team at The Farm sees every change.</p>
+    <div class="actions"><a class="btn btn-cream" href="#guests">Open your guest list</a><a class="btn btn-navy" style="background:transparent;box-shadow:inset 0 0 0 1px rgba(250,247,239,.5)" href="#schedule">See the schedule</a></div>
+  </div>
+</section>
+
+<main>
+
+<section class="block" id="glance">
+  <span class="eyebrow">Your stay at a glance</span>
+  <h2 id="g-h2">Your stay on The Farm</h2>
+  <div class="grid g4" style="margin-top:18px">
+    <div class="card fact"><div class="k">Arrive</div><div class="v" id="f-arrive"></div><div class="s">Check in from 4:00 pm at The Welcome Barn</div></div>
+    <div class="card fact"><div class="k">Depart</div><div class="v" id="f-depart"></div><div class="s">Check out by 10:00 am</div></div>
+    <div class="card fact"><div class="k">Guests</div><div class="v" id="f-expected"></div><div class="s" id="f-countdue"></div></div>
+    <div class="card fact"><div class="k">Guest list closes</div><div class="v" id="f-closes"></div><div class="s">After that, call or email us with changes</div></div>
+  </div>
+</section>
+
+<section class="block" id="schedule">
+  <span class="eyebrow">Day by day</span>
+  <h2>Your schedule</h2>
+  <p class="lead" id="sched-lead"></p>
+  <div class="card" id="sched"></div>
+</section>
+
+<section class="block" id="guests">
+  <span class="eyebrow">Your guest list</span>
+  <h2>Who's coming</h2>
+  <p class="lead">Add each guest and the details that help us take care of them. You can come back and change anything until the list closes.</p>
+  <div class="notice-bar closed" id="closed-bar" hidden></div>
+  <div class="notice-bar info" id="status-bar" hidden></div>
+  <div class="prog">
+    <div class="card"><div class="n" id="p-added">0 of 10</div><div class="l">Guests added</div><div class="bar"><i id="b-added" style="width:0"></i></div></div>
+    <div class="card"><div class="n" id="p-placed">0 of 10</div><div class="l">Placed in a room</div><div class="bar"><i id="b-placed" style="width:0"></i></div></div>
+    <div class="card"><div class="n" id="p-arr">0 of 10</div><div class="l">Arrival plans</div><div class="bar"><i id="b-arr" style="width:0"></i></div></div>
+  </div>
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px">
+      <h3 style="font-size:20px">Guests</h3>
+      <button class="btn btn-navy" id="add-guest">Add a guest</button>
+    </div>
+    <div style="overflow-x:auto"><table class="gl"><thead><tr><th>Guest</th><th>Room</th><th class="hide-m">Arriving</th><th class="hide-m">At the table</th><th></th></tr></thead><tbody id="g-body"></tbody></table></div>
+  </div>
+</section>
+
+<section class="block" id="rooms">
+  <span class="eyebrow">Who stays where</span>
+  <h2>Your rooms</h2>
+  <p class="lead">Choose a room for each guest when you add or edit them. Our Guest Services team sets up your reservations from this list.</p>
+  <div class="homes-board" id="rooms-board"></div>
+</section>
+
+<section class="block" id="spa">
+  <div class="spa">
+    <div>
+      <div class="eyebrow">The Stable Spa</div>
+      <h2>Add a spa credit for your group</h2>
+      <p>The treatment begins before you reach the spa. It's in the mountain air, the open fields, the quiet rhythm of The Farm.</p>
+      <p>Many groups give each guest a spa credit. Everyone chooses the treatment that suits them, and we take care of the rest. Choose an amount and we'll follow up with the details.</p>
+    </div>
+    <div>
+      <div class="credits" role="group" aria-label="Spa credit per guest">
+        <button class="credit" data-credit="75" aria-pressed="false"><div class="amt">$75</div><div class="per">Per guest</div></button>
+        <button class="credit" data-credit="100" aria-pressed="false"><div class="amt">$100</div><div class="per">Per guest</div></button>
+        <button class="credit" data-credit="150" aria-pressed="false"><div class="amt">$150</div><div class="per">Per guest</div></button>
+        <button class="credit" data-credit="200" aria-pressed="false"><div class="amt">$200</div><div class="per">Per guest</div></button>
+      </div>
+      <div style="margin-top:14px"><a class="btn btn-cream" id="spa-ask" style="width:100%" href="mailto:sales@thehorseshoefarm.com">Ask us about a spa credit</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="know">
+  <span class="eyebrow">Know before you go</span>
+  <h2>Arriving at The Farm</h2>
+  <div class="grid g2" style="margin-top:18px">
+    <div class="card"><dl class="kv">
+      <dt>Address</dt><dd>155 Horse Shoe Farm Drive, Hendersonville, NC 28791</dd>
+      <dt>Check-in</dt><dd>From 4:00 pm at The Welcome Barn, where you'll get your door code</dd>
+      <dt>Check-out</dt><dd>10:00 am</dd>
+      <dt>Front desk</dt><dd>The Welcome Barn, 8:00 am to 11:00 pm daily</dd>
+      <dt>Arriving late?</dt><dd>Guest Services will send your door code and directions by phone, text or email</dd>
+    </dl></div>
+    <div class="card"><dl class="kv">
+      <dt>Your event team</dt><dd><span id="owner">Your event team</span>, Sales &amp; Events</dd>
+      <dt>Phone</dt><dd>(828) 393-3034, ext 4</dd>
+      <dt>Email</dt><dd>sales@thehorseshoefarm.com</dd>
+      <dt>Emergencies</dt><dd>Dial 911 and give your home's exact address</dd>
+    </dl></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <img src="assets/logo.webp" alt="The Horse Shoe Farm">
+  <b>A place to BE</b>
+  Lodging · Dining · Spa · 155 Horse Shoe Farm Drive, Hendersonville, NC
+</footer>
+
+<dialog class="m" id="dlg">
+  <form method="dialog" id="g-form">
+    <div class="m-h"><h3 id="dlg-title">Add a guest</h3><button type="button" class="linkbtn" data-close>Close</button></div>
+    <div class="m-b"><div class="f" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 16px">
+      <label class="l">First name<input name="First name" required maxlength="80"></label>
+      <label class="l">Last name<input name="Last name" required maxlength="80"></label>
+      <label class="l">Email<input name="Email" type="email" maxlength="120"><span class="hint">Optional. For check-in details from Guest Services.</span></label>
+      <label class="l">Mobile phone<input name="Mobile" type="tel" maxlength="40"></label>
+      <label class="l full" style="grid-column:1/-1">Room<select name="roomkey" id="roomsel"></select><span class="hint">Rooms that are full are greyed out.</span></label>
+      <label class="l">Arrival date<input name="Arrival date" type="date"></label>
+      <label class="l">About what time?<input name="Arrival time" placeholder="e.g. 4:30 pm" maxlength="40"></label>
+      <label class="l">How are they traveling?<select name="Travel"><option value="">Choose</option><option>Driving</option><option>Flying, then a rental car</option><option>Flying, then a ride with the group</option><option>Other</option></select></label>
+      <label class="l">Airport and flight, if flying<input name="Flight" placeholder="e.g. AVL, lands 2:15 pm" maxlength="80"></label>
+      <label class="l">Departure date<input name="Departure date" type="date"></label>
+      <span></span>
+      <fieldset style="grid-column:1/-1;border:0;padding:0;margin:0"><label class="l" style="margin-bottom:8px">Meals they'll join</label>
+        <div class="checks" id="meal-checks"></div></fieldset>
+      <label class="l" style="grid-column:1/-1">Dietary needs<textarea name="Dietary needs" maxlength="300" placeholder="Vegetarian, gluten free, no pork..."></textarea></label>
+      <label class="l" style="grid-column:1/-1;flex-direction:row;align-items:center;gap:10px;text-transform:none;letter-spacing:0;font-size:14.5px;color:var(--ink)"><input type="checkbox" name="Allergy" value="Yes" style="width:18px;height:18px;accent-color:var(--navy)"> This guest has a food allergy (describe it above so the kitchen can plan)</label>
+      <label class="l">Interested in The Stable Spa?<select name="Spa interest"><option value="">Choose</option><option>Yes</option><option>Maybe</option><option>No</option></select></label>
+      <label class="l">Accessibility needs<input name="Accessibility" maxlength="200"></label>
+      <label class="l" style="grid-column:1/-1">Celebrations or anything else<textarea name="Celebrations and notes" maxlength="300" placeholder="A birthday, an anniversary, a request"></textarea></label>
+    </div></div>
+    <div class="m-f"><span class="err" id="dlg-err"></span><button type="button" class="btn btn-ghost" data-close>Cancel</button><button class="btn btn-navy" id="dlg-save">Save guest</button></div>
+  </form>
+</dialog>
+
+<dialog class="m" id="who">
+  <form method="dialog" id="who-form">
+    <div class="m-h"><h3>Who's editing?</h3></div>
+    <div class="m-b"><label class="l">Your name<input id="who-name" required maxlength="80"></label><p class="hint" style="margin-top:8px">So your event team knows who made each change.</p></div>
+    <div class="m-f"><button class="btn btn-navy">Continue</button></div>
+  </form>
+</dialog>
+
+<script>
+(function(){
+/* The Horse Shoe Farm · Group portal
+   One shared page for every group. Each group's details live in groups/<id>.json, encrypted with
+   that group's password (PBKDF2-SHA256 + AES-GCM). Nothing about a group is readable without it.
+   Guest answers are saved only in The Farm's Group Manifests sheet, through its web app. */
+var MEALS_DEFAULT=["Thursday dinner","Friday breakfast","Friday dinner","Saturday breakfast","Saturday dinner","Sunday breakfast"];
+var $=function(s){return document.querySelector(s)};
+var esc=function(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})};
+var DOW=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],MONL=["January","February","March","April","May","June","July","August","September","October","November","December"];
+function pd(iso){var p=String(iso||"").split("-").map(Number);return p.length===3?new Date(p[0],p[1]-1,p[2]):null}
+function nice(iso,long){var d=pd(iso);if(!d)return "";return DOW[d.getDay()]+", "+(long?MONL[d.getMonth()]:MON[d.getMonth()])+" "+d.getDate()+(long?", "+d.getFullYear():"")}
+function who(){try{return sessionStorage.getItem("thsf-who")||""}catch(e){return ""}}
+var params=new URLSearchParams(location.search);
+var GID=(params.get("g")||location.hash.replace("#","")||"").replace(/[^a-z0-9-]/gi,"").toLowerCase();
+var PREVIEW=params.get("preview")==="1";
+var C=null,S=null,EDIT=null;
+
+/* ---------- Decrypt the group's details ---------- */
+function b64(s){var bin=atob(s),u=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);return u}
+function decrypt(box,pw){
+  var enc=new TextEncoder();
+  return crypto.subtle.importKey("raw",enc.encode(pw),"PBKDF2",false,["deriveKey"]).then(function(k){
+    return crypto.subtle.deriveKey({name:"PBKDF2",salt:b64(box.salt),iterations:box.iter,hash:"SHA-256"},k,{name:"AES-GCM",length:256},false,["decrypt"]);
+  }).then(function(key){return crypto.subtle.decrypt({name:"AES-GCM",iv:b64(box.iv)},key,b64(box.data))})
+  .then(function(buf){return JSON.parse(new TextDecoder().decode(buf))});
+}
+var BOX=null;
+function fetchBox(){
+  if(!GID)return Promise.reject("nogroup");
+  return fetch("groups/"+GID+".json",{cache:"no-store"}).then(function(r){if(!r.ok)throw "nogroup";return r.json()});
+}
+function unlock(pw,remember){
+  return decrypt(BOX,pw).then(function(cfg){
+    C=cfg;try{sessionStorage.setItem("thsf-pw-"+GID,pw)}catch(e){}
+    $("#gate").hidden=true;start();
+  });
+}
+$("#gate-form").addEventListener("submit",function(e){e.preventDefault();
+  var pw=$("#gate-pw").value.trim();if(!pw||!BOX)return;
+  $("#gate-err").textContent="";
+  unlock(pw).catch(function(){$("#gate-err").textContent="That password does not match. Check the email from your Horse Shoe Farm team."});
+});
+fetchBox().then(function(box){BOX=box;var saved="";try{saved=sessionStorage.getItem("thsf-pw-"+GID)||""}catch(e){}
+  if(saved)unlock(saved).catch(function(){});
+}).catch(function(){$("#gate-err").textContent="We couldn't find this page. Check the link from your Horse Shoe Farm team."});
+
+/* ---------- Page content from the group's details ---------- */
+function fill(){
+  document.title=C.group+" · Your Group at The Horse Shoe Farm";
+  $("#gate-title").textContent=C.group;
+  $("#h-dates").textContent=C.datesLine||"";
+  $("#h-title").textContent="Welcome, "+(C.shortName||C.group);
+  $("#g-h2").textContent=C.nightsLine||"Your stay on The Farm";
+  $("#f-arrive").textContent=nice(C.arrive);$("#f-depart").textContent=nice(C.depart);
+  $("#f-expected").textContent=C.expected||"";
+  $("#f-countdue").textContent=C.countDue?"Your final count is due "+nice(C.countDue):"";
+  $("#sched-lead").textContent=C.scheduleLead||"";
+  $("#sched").innerHTML=(C.schedule||[]).map(function(d){var dt=pd(d.date);
+    return "<div class='day'><div class='datebadge'><div class='dw'>"+DOW[dt.getDay()].slice(0,3)+"</div><div class='dy'>"+dt.getDate()+"</div><div class='mo'>"+MON[dt.getMonth()]+"</div></div><div>"+
+      (d.items||[]).map(function(i){return "<div class='ev'><div class='t'>"+esc(i[0])+"</div><div><div class='n'>"+esc(i[1])+"</div><div class='d'>"+esc(i[2]||"")+"</div></div></div>"}).join("")+"</div></div>"}).join("");
+  if(C.owner)$("#owner").textContent=C.owner;
+  $("#spa-ask").href="mailto:sales@thehorseshoefarm.com?subject="+encodeURIComponent("Spa credit for "+C.group);
+}
+
+/* ---------- Guest list (live from The Farm's manifest sheet) ---------- */
+function api(method,body){
+  if(PREVIEW)return Promise.resolve(fakeSave(body));
+  var url=C.api+(method==="GET"?"?key="+encodeURIComponent(C.key):"");
+  var opt=method==="GET"?{credentials:"omit"}:{method:"POST",credentials:"omit",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(body)};
+  return fetch(url,opt).then(function(r){return r.json()});
+}
+function fakeSave(b){if(!b)return JSON.parse(JSON.stringify(S));var g=b.guest||{};
+  if(b.action==="remove")S.guests=S.guests.filter(function(x){return x.id!==g.id});
+  else if(g.id)Object.assign(S.guests.find(function(y){return y.id===g.id}),g);
+  else{g.id="p"+Date.now();S.guests.push(g)}
+  return JSON.parse(JSON.stringify(S));}
+function status(m,kind){var b=$("#status-bar");b.textContent=m;b.hidden=!m;b.className="notice-bar "+(kind||"info")}
+function start(){
+  fill();
+  if(PREVIEW){$("#preview-bar").hidden=false;S={ok:true,group:{name:C.group,expected:C.expected,eventOwner:C.owner,closes:C.closes,open:true},rooms:C.previewRooms||[],guests:[]};render();return}
+  status("Loading your guest list…");
+  api("GET").then(function(d){if(!d||!d.ok)throw d;S=d;status("");render()})
+  .catch(function(){status("We couldn't load your guest list just now. Refresh the page in a moment, or call us at (828) 393-3034, ext 4.","closed")});
+}
+function occ(home,room,except){return S.guests.filter(function(g){return g.Home===home&&g.Room===room&&g.id!==except}).length}
+function pct(a,b){return b?Math.min(100,Math.round(a/b*100)):0}
+function render(){
+  var G=S.group,exp=G.expected||C.expected||S.guests.length||0,n=S.guests.length;
+  if(G.expected)$("#f-expected").textContent=G.expected;
+  if(G.closes)$("#f-closes").textContent=nice(G.closes);
+  if(G.eventOwner&&!C.owner)$("#owner").textContent=G.eventOwner;
+  var placed=S.guests.filter(function(g){return g.Room}).length,arr=S.guests.filter(function(g){return g["Arrival time"]||g.Travel}).length;
+  [["added",n],["placed",placed],["arr",arr]].forEach(function(x){$("#p-"+x[0]).textContent=x[1]+" of "+(exp||n);$("#b-"+x[0]).style.width=pct(x[1],exp||n)+"%"});
+  var cb=$("#closed-bar");
+  if(!G.open){cb.hidden=false;cb.textContent="Your guest list closed on "+nice(G.closes,true)+". For changes, call us at (828) 393-3034, ext 4, or email sales@thehorseshoefarm.com.";$("#add-guest").hidden=true}
+  else{cb.hidden=true;$("#add-guest").hidden=false}
+  var rows=S.guests.slice().sort(function(a,b){return (a["Last name"]+a["First name"]).localeCompare(b["Last name"]+b["First name"])});
+  $("#g-body").innerHTML=rows.length?rows.map(function(g){
+    var meals=(g.Meals||"").split(";").filter(function(s){return s.trim()}).length;
+    return "<tr><td><b>"+esc(g["First name"]+" "+g["Last name"])+"</b>"+(g["Dietary needs"]?"<div class='sub'>"+esc(g["Dietary needs"])+"</div>":"")+(g.Allergy?" <span class='chip warn'>Allergy</span>":"")+"</td>"+
+      "<td>"+(g.Room?esc(g.Room)+"<div class='sub'>"+esc(g.Home)+"</div>":"<span class='chip warn'>Not placed</span>")+"</td>"+
+      "<td class='hide-m'>"+esc(nice(g["Arrival date"]))+(g["Arrival time"]?"<div class='sub'>"+esc(g["Arrival time"])+"</div>":"")+"</td>"+
+      "<td class='hide-m'>"+(meals?meals+" meal"+(meals===1?"":"s"):"<span class='sub'>Not chosen</span>")+"</td>"+
+      "<td style='white-space:nowrap;text-align:right'>"+(G.open?"<button class='linkbtn' data-edit='"+esc(g.id)+"'>Edit</button><button class='linkbtn danger' data-del='"+esc(g.id)+"'>Remove</button>":"")+"</td></tr>"}).join("")
+    :"<tr><td colspan='5' class='empty'>No guests yet. Add your first guest to get started.</td></tr>";
+  var homes=[];S.rooms.forEach(function(r){if(homes.indexOf(r.Home)<0)homes.push(r.Home)});
+  $("#rooms-board").innerHTML=homes.map(function(h){return "<div class='card home'><h3>"+esc(h)+"</h3>"+S.rooms.filter(function(r){return r.Home===h}).map(function(r){
+    var gs=S.guests.filter(function(g){return g.Home===h&&g.Room===r.Room});
+    return "<div class='rm'><div><b>"+esc(r.Room)+"</b><div style='font-size:12.5px;color:var(--ink-3)'>"+esc(r.Beds)+" · sleeps "+esc(r.Sleeps)+"</div></div><div class='who'>"+(gs.length?gs.map(function(g){return esc(g["First name"]+" "+g["Last name"])}).join("<br>"):"<span class='open'>Open</span>")+"</div></div>"}).join("")+"</div>"}).join("");
+}
+
+/* ---------- Edit dialog ---------- */
+var dlg=$("#dlg"),form=$("#g-form");
+function meals(){return (C&&C.meals)||MEALS_DEFAULT}
+function openEdit(g){
+  if(!who()){openWho(function(){openEdit(g)});return}
+  EDIT=g||null;$("#dlg-title").textContent=g?"Edit "+(g["First name"]||"guest"):"Add a guest";$("#dlg-err").textContent="";form.reset();
+  $("#meal-checks").innerHTML=meals().map(function(m){return "<label><input type='checkbox' name='meal' value='"+esc(m)+"'> "+esc(m)+"</label>"}).join("");
+  $("#roomsel").innerHTML="<option value=''>Not placed yet</option>"+S.rooms.map(function(r){var k=r.Home+"|"+r.Room;var full=occ(r.Home,r.Room,g&&g.id)>=Number(r.Sleeps);var sel=g&&g.Home===r.Home&&g.Room===r.Room;
+    return "<option value='"+esc(k)+"'"+(full&&!sel?" disabled":"")+(sel?" selected":"")+">"+esc(r.Home+" · "+r.Room+" ("+r.Beds+")"+(full&&!sel?" · full":""))+"</option>"}).join("");
+  var v=g||{"Arrival date":C.arrive,"Departure date":C.depart,Meals:meals().join("; ")};
+  Array.prototype.forEach.call(form.elements,function(el){if(!el.name||el.name==="roomkey"||el.name==="meal")return;
+    if(el.type==="checkbox")el.checked=!!v[el.name];else el.value=v[el.name]||""});
+  var ms=(v.Meals||"").split(";").map(function(s){return s.trim()});
+  form.querySelectorAll("input[name=meal]").forEach(function(c){c.checked=ms.indexOf(c.value)>=0});
+  dlg.showModal();
+}
+form.addEventListener("submit",function(e){e.preventDefault();
+  var fd=new FormData(form),guest={};
+  ["First name","Last name","Email","Mobile","Arrival date","Arrival time","Travel","Flight","Departure date","Dietary needs","Spa interest","Accessibility","Celebrations and notes"].forEach(function(k){guest[k]=(fd.get(k)||"").toString().trim()});
+  if(!guest["First name"]||!guest["Last name"]){$("#dlg-err").textContent="Add a first and last name.";return}
+  var rk=(fd.get("roomkey")||"").toString().split("|");guest.Home=rk[1]?rk[0]:"";guest.Room=rk[1]||"";
+  guest.Meals=fd.getAll("meal").join("; ");guest.Allergy=fd.get("Allergy")?"Yes":"";
+  if(EDIT)guest.id=EDIT.id;
+  var btn=$("#dlg-save");btn.disabled=true;btn.textContent="Saving…";
+  api("POST",{key:C.key,action:"save",by:who(),guest:guest}).then(function(d){
+    btn.disabled=false;btn.textContent="Save guest";
+    if(!d.ok){$("#dlg-err").textContent=d.error==="room_full"?"That room is full. Choose another.":d.error==="closed"?"Your guest list has closed. Call or email us for changes.":"Something went wrong. Try again in a moment.";if(d.error==="closed"){S.group.open=false;render()}return}
+    S=d;render();dlg.close();
+  }).catch(function(){btn.disabled=false;btn.textContent="Save guest";$("#dlg-err").textContent="We couldn't reach The Farm just now. Check your connection and try again."});
+});
+dlg.querySelectorAll("[data-close]").forEach(function(b){b.addEventListener("click",function(){dlg.close()})});
+$("#add-guest").addEventListener("click",function(){openEdit(null)});
+$("#g-body").addEventListener("click",function(e){var t=e.target;
+  if(t.dataset.edit)openEdit(S.guests.find(function(g){return g.id===t.dataset.edit}));
+  if(t.dataset.del){var g=S.guests.find(function(x){return x.id===t.dataset.del});if(!g)return;
+    if(!who()){openWho(function(){});return}
+    if(!confirm("Remove "+g["First name"]+" "+g["Last name"]+" from your guest list?"))return;
+    api("POST",{key:C.key,action:"remove",by:who(),guest:{id:g.id}}).then(function(d){if(d.ok){S=d;render()}else alert("We couldn't remove that guest. Try again in a moment.")})}
+});
+
+/* ---------- Who is editing ---------- */
+var whoDlg=$("#who"),whoNext=null;
+function openWho(next){whoNext=next;$("#who-name").value=who();whoDlg.showModal()}
+$("#who-form").addEventListener("submit",function(e){e.preventDefault();var n=$("#who-name").value.trim();if(!n)return;try{sessionStorage.setItem("thsf-who",n)}catch(x){}whoDlg.close();if(whoNext)whoNext()});
+
+/* ---------- Spa credit ---------- */
+document.querySelectorAll(".credit").forEach(function(c){c.addEventListener("click",function(){
+  document.querySelectorAll(".credit").forEach(function(x){x.setAttribute("aria-pressed",x===c?"true":"false")});
+  $("#spa-ask").href="mailto:sales@thehorseshoefarm.com?subject="+encodeURIComponent("Spa credit for "+(C?C.group:"our group"))+"&body="+encodeURIComponent("We'd like to learn more about a $"+c.dataset.credit+" spa credit per guest.");
+})});
+})();
+</script>
+
+</body>
+</html>
