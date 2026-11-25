@@ -153,6 +153,25 @@ dialog.m::backdrop{background:rgba(39,37,95,.45)}
 .m-b{padding:10px 24px 22px;max-height:72vh;overflow:auto}
 .m-f{padding:14px 24px;border-top:1px solid var(--line);display:flex;gap:10px;justify-content:flex-end;align-items:center}
 .err{color:#9B2C2C;font-size:13.5px;margin-right:auto}
+.diet .dg{margin-bottom:12px}.diet .dl{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:8px}
+.tools{display:flex;gap:8px;flex-wrap:wrap}.tools[hidden]{display:none}
+dialog.sheet{width:min(1400px,97vw)}
+.sheet-wrap{overflow:auto;max-height:62vh;border:1px solid var(--line);border-radius:6px}
+table.sh{border-collapse:collapse;font-size:13.5px;min-width:100%}
+table.sh th{position:sticky;top:0;background:var(--soft);color:var(--navy);font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);white-space:nowrap;z-index:1}
+table.sh td{border-bottom:1px solid var(--line-2);border-right:1px solid var(--line-2);padding:0;vertical-align:middle}
+table.sh td.rn{background:#FAF7EF;color:var(--ink-3);font-size:12px;text-align:center;padding:0 6px;min-width:34px}
+table.sh input,table.sh select,table.sh button.dc{border:0;background:transparent;font:500 13.5px var(--sans);color:var(--ink);padding:9px 8px;width:100%;min-height:38px;text-align:left}
+table.sh button.dc{cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:240px}
+table.sh button.dc.empty{color:var(--ink-3);font-style:italic}
+table.sh input:focus,table.sh select:focus,table.sh button.dc:focus{outline:2px solid var(--navy);outline-offset:-2px;background:#fff}
+table.sh tr.dirty td.rn{background:#E8ECF8;color:var(--navy);font-weight:700}
+table.sh tr.bad td{background:#FDF3F3}
+table.sh td.st{font-size:12px;padding:0 8px;white-space:nowrap;color:var(--ink-3)}
+table.sh td.st.bad{color:#9B2C2C;white-space:normal;min-width:170px}
+table.sh td.st.ok{color:#2F6B3A}
+.req{color:#9B2C2C}
+pre.q{white-space:pre-wrap;font:500 14px/1.55 var(--sans);background:#FAF7EF;border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin:0}
 @media (max-width:860px){.prog,.homes-board{grid-template-columns:1fr}table.gl .hide-m{display:none}}
 </style>
 </head>
@@ -174,7 +193,7 @@ dialog.m::backdrop{background:rgba(39,37,95,.45)}
   <div class="top-in">
     <img src="assets/logo.webp" alt="The Horse Shoe Farm · Lodging · Dining · Spa">
     <nav class="main" aria-label="Your group">
-      <a href="#glance">Your Stay</a><a href="#schedule">Schedule</a><a href="#guests">Guest List</a><a href="#rooms">Rooms</a><a href="#spa">Spa</a><a href="#know">Know Before You Go</a>
+      <a href="#glance">Your Stay</a><a href="#schedule">Schedule</a><a href="#guests">Guest List</a><a href="#about">About Your Group</a><a href="#rooms">Rooms</a><a href="#spa">Spa</a><a href="#know">Know Before You Go</a>
     </nav>
   </div>
 </header>
@@ -212,7 +231,7 @@ dialog.m::backdrop{background:rgba(39,37,95,.45)}
 <section class="block" id="guests">
   <span class="eyebrow">Your guest list</span>
   <h2>Who's coming</h2>
-  <p class="lead">Add each guest and the details that help us take care of them. You can come back and change anything until the list closes.</p>
+  <p class="lead">Name, email and room are all we need to start. Add guests one at a time, edit everyone at once in the spreadsheet view, or paste the list you already keep. You can fill in the rest any time until the list closes.</p>
   <div class="notice-bar closed" id="closed-bar" hidden></div>
   <div class="notice-bar info" id="status-bar" hidden></div>
   <div class="prog">
@@ -223,9 +242,23 @@ dialog.m::backdrop{background:rgba(39,37,95,.45)}
   <div class="card">
     <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px">
       <h3 style="font-size:20px">Guests</h3>
-      <button class="btn btn-navy" id="add-guest">Add a guest</button>
+      <div class="tools" id="g-tools"><button class="btn btn-ghost" id="ask-group">Questions for your group</button><button class="btn btn-ghost" id="paste-open">Paste your list</button><button class="btn btn-ghost" id="sheet-open">Spreadsheet view</button><button class="btn btn-navy" id="add-guest">Add a guest</button></div>
     </div>
     <div style="overflow-x:auto"><table class="gl"><thead><tr><th>Guest</th><th>Room</th><th class="hide-m">Arriving</th><th class="hide-m">At the table</th><th></th></tr></thead><tbody id="g-body"></tbody></table></div>
+  </div>
+</section>
+
+<section class="block" id="about">
+  <span class="eyebrow">For our team</span>
+  <h2>Tell us about your group</h2>
+  <p class="lead">Anything you share here goes to the Horse Shoe Farm team taking care of your group, so everyone from the kitchen to Guest Services knows what matters to you.</p>
+  <div class="card">
+    <form id="notes-form" class="f" style="display:grid;gap:16px">
+      <label class="l">About your group<textarea name="about" maxlength="2000" style="min-height:96px" placeholder="Who's coming, what brings you together, and what you hope everyone takes home"></textarea></label>
+      <label class="l">Needs and requests for our team<textarea name="needs" maxlength="2000" style="min-height:96px" placeholder="Accessibility or mobility, quiet spaces, setup for your sessions, timing, anything we should plan around"></textarea></label>
+      <label class="l">Anything else we should know<textarea name="other" maxlength="2000" style="min-height:84px" placeholder="Celebrations, surprises, things to avoid"></textarea></label>
+      <div style="display:flex;gap:12px;align-items:center;justify-content:flex-end;flex-wrap:wrap"><span class="hint" id="notes-msg" style="margin-right:auto"></span><button class="btn btn-navy" id="notes-save">Save notes</button></div>
+    </form>
   </div>
 </section>
 
@@ -290,7 +323,7 @@ dialog.m::backdrop{background:rgba(39,37,95,.45)}
     <div class="m-b"><div class="f" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 16px">
       <label class="l">First name<input name="First name" required maxlength="80"></label>
       <label class="l">Last name<input name="Last name" required maxlength="80"></label>
-      <label class="l">Email<input name="Email" type="email" maxlength="120"><span class="hint">Optional. For check-in details from Guest Services.</span></label>
+      <label class="l">Email<input name="Email" type="email" required maxlength="120"><span class="hint">For check-in details from Guest Services.</span></label>
       <label class="l">Mobile phone<input name="Mobile" type="tel" maxlength="40"></label>
       <label class="l full" style="grid-column:1/-1">Room<select name="roomkey" id="roomsel"></select><span class="hint">Rooms that are full are greyed out.</span></label>
       <label class="l">Arrival date<input name="Arrival date" type="date"></label>
@@ -301,10 +334,8 @@ dialog.m::backdrop{background:rgba(39,37,95,.45)}
       <span></span>
       <fieldset style="grid-column:1/-1;border:0;padding:0;margin:0"><label class="l" style="margin-bottom:8px">Meals they'll join</label>
         <div class="checks" id="meal-checks"></div></fieldset>
-      <label class="l" style="grid-column:1/-1">Dietary needs<textarea name="Dietary needs" maxlength="300" placeholder="Vegetarian, gluten free, no pork..."></textarea></label>
-      <label class="l" style="grid-column:1/-1;flex-direction:row;align-items:center;gap:10px;text-transform:none;letter-spacing:0;font-size:14.5px;color:var(--ink)"><input type="checkbox" name="Allergy" value="Yes" style="width:18px;height:18px;accent-color:var(--navy)"> This guest has a food allergy (describe it above so the kitchen can plan)</label>
-      <label class="l">Interested in The Stable Spa?<select name="Spa interest"><option value="">Choose</option><option>Yes</option><option>Maybe</option><option>No</option></select></label>
-      <label class="l">Accessibility needs<input name="Accessibility" maxlength="200"></label>
+      <fieldset style="grid-column:1/-1;border:0;padding:0;margin:0"><label class="l" style="margin-bottom:8px">Dietary needs</label><div id="diet-form"></div></fieldset>
+      <label class="l" style="grid-column:1/-1">Accessibility needs<input name="Accessibility" maxlength="200"></label>
       <label class="l" style="grid-column:1/-1">Celebrations or anything else<textarea name="Celebrations and notes" maxlength="300" placeholder="A birthday, an anniversary, a request"></textarea></label>
     </div></div>
     <div class="m-f"><span class="err" id="dlg-err"></span><button type="button" class="btn btn-ghost" data-close>Cancel</button><button class="btn btn-navy" id="dlg-save">Save guest</button></div>
@@ -317,6 +348,40 @@ dialog.m::backdrop{background:rgba(39,37,95,.45)}
     <div class="m-b"><label class="l">Your name<input id="who-name" required maxlength="80"></label><p class="hint" style="margin-top:8px">So your event team knows who made each change.</p></div>
     <div class="m-f"><button class="btn btn-navy">Continue</button></div>
   </form>
+</dialog>
+
+<dialog class="m sheet" id="sheet">
+  <div class="m-h"><h3>Your guest list, spreadsheet view</h3><button type="button" class="linkbtn" id="sheet-x">Close</button></div>
+  <div class="m-b" style="max-height:none">
+    <p class="hint" style="margin:0 0 10px;font-size:13.5px">Type in any cell. <b>First name, last name and email</b> are needed for each guest; everything else can wait. To paste from Excel or Google Sheets, click a cell and paste, and the rows fill in from there. Changed rows are marked in blue until you save.</p>
+    <div class="sheet-wrap"><table class="sh"><thead id="sh-head"></thead><tbody id="sh-body"></tbody></table></div>
+    <div style="margin-top:10px"><button type="button" class="linkbtn" id="sheet-more">Add 5 more rows</button></div>
+  </div>
+  <div class="m-f"><span class="err" id="sheet-msg" style="color:var(--ink-2)"></span><button type="button" class="btn btn-ghost" id="sheet-cancel">Close</button><button type="button" class="btn btn-navy" id="sheet-save">Save changes</button></div>
+</dialog>
+
+<dialog class="m" id="dietdlg">
+  <div class="m-h"><h3 id="diet-title">Dietary needs</h3></div>
+  <div class="m-b"><div id="diet-pop"></div></div>
+  <div class="m-f"><button type="button" class="btn btn-ghost" id="diet-cancel">Cancel</button><button type="button" class="btn btn-navy" id="diet-ok">Done</button></div>
+</dialog>
+
+<dialog class="m" id="pastedlg">
+  <div class="m-h"><h3>Paste your list</h3><button type="button" class="linkbtn" data-pclose>Close</button></div>
+  <div class="m-b">
+    <p class="hint" style="margin:0 0 10px;font-size:13.5px">Copy your guest list from Excel, Google Sheets or a form's responses, including the header row, and paste it here. We match columns like First name, Last name, Email, Phone and Dietary needs. You'll see everything in the spreadsheet view to check before you save.</p>
+    <label class="l">Your list<textarea id="paste-txt" style="min-height:200px;font-size:13px" placeholder="First name	Last name	Email	Mobile	Dietary needs"></textarea></label>
+  </div>
+  <div class="m-f"><span class="err" id="paste-err"></span><button type="button" class="btn btn-ghost" data-pclose>Cancel</button><button type="button" class="btn btn-navy" id="paste-go">Add to my list</button></div>
+</dialog>
+
+<dialog class="m" id="askdlg">
+  <div class="m-h"><h3>Questions for your group</h3><button type="button" class="linkbtn" data-aclose>Close</button></div>
+  <div class="m-b">
+    <p class="hint" style="margin:0 0 12px;font-size:13.5px">Send these to your guests, or use the spreadsheet template to collect answers. When you have them, paste the template straight into <b>Paste your list</b>.</p>
+    <pre class="q" id="ask-text"></pre>
+  </div>
+  <div class="m-f"><span class="err" id="ask-msg" style="color:var(--ink-2)"></span><button type="button" class="btn btn-ghost" id="ask-tpl">Download the template</button><button type="button" class="btn btn-navy" id="ask-copy">Copy the questions</button></div>
 </dialog>
 
 <script>
@@ -414,18 +479,19 @@ function render(){
   var placed=S.guests.filter(function(g){return g.Room}).length,arr=S.guests.filter(function(g){return g["Arrival time"]||g.Travel}).length;
   [["added",n],["placed",placed],["arr",arr]].forEach(function(x){$("#p-"+x[0]).textContent=x[1]+" of "+(exp||n);$("#b-"+x[0]).style.width=pct(x[1],exp||n)+"%"});
   var cb=$("#closed-bar");
-  if(!G.open){cb.hidden=false;cb.textContent="Your guest list closed on "+nice(G.closes,true)+". For changes, call us at (828) 393-3034, ext 4, or email sales@thehorseshoefarm.com.";$("#add-guest").hidden=true}
-  else{cb.hidden=true;$("#add-guest").hidden=false}
+  if(!G.open){cb.hidden=false;cb.textContent="Your guest list closed on "+nice(G.closes,true)+". For changes, call us at (828) 393-3034, ext 4, or email sales@thehorseshoefarm.com.";$("#g-tools").hidden=true}
+  else{cb.hidden=true;$("#g-tools").hidden=false}
   var rows=S.guests.slice().sort(function(a,b){return (a["Last name"]+a["First name"]).localeCompare(b["Last name"]+b["First name"])});
   $("#g-body").innerHTML=rows.length?rows.map(function(g){
     var meals=(g.Meals||"").split(";").filter(function(s){return s.trim()}).length;
-    return "<tr><td><b>"+esc(g["First name"]+" "+g["Last name"])+"</b>"+(g["Dietary needs"]?"<div class='sub'>"+esc(g["Dietary needs"])+"</div>":"")+(g.Allergy?" <span class='chip warn'>Allergy</span>":"")+"</td>"+
+    return "<tr><td><b>"+esc(g["First name"]+" "+g["Last name"])+"</b>"+(g["Dietary needs"]?"<div class='sub'>"+esc(g["Dietary needs"])+"</div>":"")+(g.Allergy||hasAllergy(g["Dietary needs"])?" <span class='chip warn'>Allergy</span>":"")+"</td>"+
       "<td>"+(g.Room?esc(g.Room)+"<div class='sub'>"+esc(g.Home)+"</div>":"<span class='chip warn'>Not placed</span>")+"</td>"+
       "<td class='hide-m'>"+esc(nice(g["Arrival date"]))+(g["Arrival time"]?"<div class='sub'>"+esc(g["Arrival time"])+"</div>":"")+"</td>"+
       "<td class='hide-m'>"+(meals?meals+" meal"+(meals===1?"":"s"):"<span class='sub'>Not chosen</span>")+"</td>"+
       "<td style='white-space:nowrap;text-align:right'>"+(G.open?"<button class='linkbtn' data-edit='"+esc(g.id)+"'>Edit</button><button class='linkbtn danger' data-del='"+esc(g.id)+"'>Remove</button>":"")+"</td></tr>"}).join("")
     :"<tr><td colspan='5' class='empty'>No guests yet. Add your first guest to get started.</td></tr>";
   var homes=[];S.rooms.forEach(function(r){if(homes.indexOf(r.Home)<0)homes.push(r.Home)});
+  fillNotes();
   $("#rooms-board").innerHTML=homes.map(function(h){return "<div class='card home'><h3>"+esc(h)+"</h3>"+S.rooms.filter(function(r){return r.Home===h}).map(function(r){
     var gs=S.guests.filter(function(g){return g.Home===h&&g.Room===r.Room});
     return "<div class='rm'><div><b>"+esc(r.Room)+"</b><div style='font-size:12.5px;color:var(--ink-3)'>"+esc(r.Beds)+" · sleeps "+esc(r.Sleeps)+"</div></div><div class='who'>"+(gs.length?gs.map(function(g){return esc(g["First name"]+" "+g["Last name"])}).join("<br>"):"<span class='open'>Open</span>")+"</div></div>"}).join("")+"</div>"}).join("");
@@ -443,16 +509,19 @@ function openEdit(g){
   var v=g||{"Arrival date":C.arrive,"Departure date":C.depart,Meals:meals().join("; ")};
   Array.prototype.forEach.call(form.elements,function(el){if(!el.name||el.name==="roomkey"||el.name==="meal")return;
     if(el.type==="checkbox")el.checked=!!v[el.name];else el.value=v[el.name]||""});
+  $("#diet-form").innerHTML=dietHTML(v["Dietary needs"]);
   var ms=(v.Meals||"").split(";").map(function(s){return s.trim()});
   form.querySelectorAll("input[name=meal]").forEach(function(c){c.checked=ms.indexOf(c.value)>=0});
   dlg.showModal();
 }
 form.addEventListener("submit",function(e){e.preventDefault();
   var fd=new FormData(form),guest={};
-  ["First name","Last name","Email","Mobile","Arrival date","Arrival time","Travel","Flight","Departure date","Dietary needs","Spa interest","Accessibility","Celebrations and notes"].forEach(function(k){guest[k]=(fd.get(k)||"").toString().trim()});
+  ["First name","Last name","Email","Mobile","Arrival date","Arrival time","Travel","Flight","Departure date","Accessibility","Celebrations and notes"].forEach(function(k){guest[k]=(fd.get(k)||"").toString().trim()});
+  guest["Dietary needs"]=dietRead($("#diet-form"));
   if(!guest["First name"]||!guest["Last name"]){$("#dlg-err").textContent="Add a first and last name.";return}
+  if(!EMAIL_RE.test(guest.Email)){$("#dlg-err").textContent="Add an email address for this guest.";return}
   var rk=(fd.get("roomkey")||"").toString().split("|");guest.Home=rk[1]?rk[0]:"";guest.Room=rk[1]||"";
-  guest.Meals=fd.getAll("meal").join("; ");guest.Allergy=fd.get("Allergy")?"Yes":"";
+  guest.Meals=fd.getAll("meal").join("; ");guest.Allergy=hasAllergy(guest["Dietary needs"])?"Yes":"";
   if(EDIT)guest.id=EDIT.id;
   var btn=$("#dlg-save");btn.disabled=true;btn.textContent="Saving…";
   api("POST",{key:C.key,action:"save",by:who(),guest:guest}).then(function(d){
@@ -481,6 +550,230 @@ document.querySelectorAll(".credit").forEach(function(c){c.addEventListener("cli
   document.querySelectorAll(".credit").forEach(function(x){x.setAttribute("aria-pressed",x===c?"true":"false")});
   $("#spa-ask").href="mailto:sales@thehorseshoefarm.com?subject="+encodeURIComponent("Spa credit for "+(C?C.group:"our group"))+"&body="+encodeURIComponent("We'd like to learn more about a $"+c.dataset.credit+" spa credit per guest.");
 })});
+
+/* ---------- Dietary needs: a checklist plus a details box ---------- */
+var EMAIL_RE=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+var DIET_PREF=["None","Vegetarian","Vegan","Pescatarian","Gluten free","Dairy free","No pork","No red meat","Kosher style","Halal"];
+var DIET_ALG=["Nut allergy","Peanut allergy","Shellfish allergy","Fish allergy","Egg allergy","Soy allergy","Sesame allergy","Other food allergy"];
+var DIET_ALL=DIET_PREF.concat(DIET_ALG);
+function normd(t){return String(t||"").toLowerCase().replace(/[-_]/g," ").replace(/\s+/g," ").trim()}
+function dietParse(s){
+  s=String(s||"");var det="",i=s.indexOf("Details:");
+  if(i>=0){det=s.slice(i+8).trim();s=s.slice(0,i).replace(/[.\s]+$/,"")}
+  var picked=[],rest=[];
+  s.split(/[,;\/\n]+/).forEach(function(t){t=t.trim();if(!t)return;var n=normd(t);
+    var hit=DIET_ALL.find(function(o){return normd(o)===n})||(/^(none|no|n\/?a|nope|no dietary needs|no restrictions)$/.test(n)?"None":null);
+    if(hit){if(picked.indexOf(hit)<0)picked.push(hit)}else rest.push(t)});
+  if(rest.length)det=rest.join(", ")+(det?". "+det:"");
+  return {picked:picked,det:det};
+}
+function dietStr(picked,det){det=String(det||"").trim();var s=picked.join(", ");if(det)s=(s?s+". ":"")+"Details: "+det;return s.slice(0,400)}
+function hasAllergy(s){var p=dietParse(s);return p.picked.some(function(x){return /allergy/i.test(x)})||/allerg|anaphyla|epi ?pen/i.test(p.det)}
+function dietShort(s){var p=dietParse(s);var a=p.picked.slice();if(p.det)a.push(p.det);return a.join(", ")}
+function dietHTML(val){var p=dietParse(val);
+  function box(o){return "<label><input type='checkbox' data-diet value='"+esc(o)+"'"+(p.picked.indexOf(o)>=0?" checked":"")+"> "+esc(o==="None"?"No dietary needs":o)+"</label>"}
+  return "<div class='diet'><div class='dg'><div class='dl'>Preferences</div><div class='checks'>"+DIET_PREF.map(box).join("")+"</div></div>"+
+    "<div class='dg'><div class='dl'>Food allergies</div><div class='checks'>"+DIET_ALG.map(box).join("")+"</div></div>"+
+    "<label class='l'>Anything else the kitchen should know<textarea class='diet-det' maxlength='300' placeholder='How serious an allergy is, foods to avoid, other preferences'>"+esc(p.det)+"</textarea></label></div>";
+}
+function dietRead(el){var picked=[].map.call(el.querySelectorAll("input[data-diet]:checked"),function(c){return c.value});return dietStr(picked,el.querySelector(".diet-det").value)}
+document.addEventListener("change",function(e){var c=e.target;if(!c.matches||!c.matches("input[data-diet]")||!c.checked)return;
+  var wrap=c.closest(".diet");wrap.querySelectorAll("input[data-diet]").forEach(function(x){if(x!==c&&(c.value==="None"||x.value==="None"))x.checked=false})});
+
+/* ---------- Spreadsheet view ---------- */
+var TRAVEL=["Driving","Flying, then a rental car","Flying, then a ride with the group","Other"];
+var COLS=[{k:"First name",w:120,req:1},{k:"Last name",w:120,req:1},{k:"Email",w:210,req:1},{k:"Mobile",w:130},{k:"room",label:"Room",w:230},
+  {k:"Arrival date",w:150,type:"date"},{k:"Arrival time",label:"About what time",w:120},{k:"Travel",w:220},{k:"Flight",label:"Airport and flight",w:170},
+  {k:"Dietary needs",w:220},{k:"Accessibility",w:170},{k:"Celebrations and notes",label:"Celebrations or notes",w:220}];
+var SEND=["First name","Last name","Email","Mobile","Arrival date","Arrival time","Travel","Flight","Departure date","Dietary needs","Accessibility","Celebrations and notes","Home","Room","Meals","Allergy"];
+var CONTENT=["First name","Last name","Email","Mobile","Arrival time","Travel","Flight","Dietary needs","Accessibility","Celebrations and notes","Room"];
+var R=[],SAVING=false,sheet=$("#sheet");
+function blankRow(){return {id:"",d:{"Arrival date":C.arrive||"","Departure date":C.depart||"",Meals:meals().join("; ")},dirty:false,err:"",ok:false}}
+function hasContent(r){return CONTENT.some(function(k){return String(r.d[k]||"").trim()})}
+function openSheet(){
+  if(!who()){openWho(openSheet);return}
+  R=S.guests.slice().sort(function(a,b){return (a["Last name"]+a["First name"]).localeCompare(b["Last name"]+b["First name"])})
+    .map(function(g){var d={};SEND.forEach(function(k){d[k]=g[k]==null?"":String(g[k])});return {id:g.id,d:d,dirty:false,err:"",ok:false}});
+  var exp=Number(S.group.expected||C.expected||0),add=Math.min(60,Math.max(5,exp-R.length));
+  for(var i=0;i<add;i++)R.push(blankRow());
+  $("#sheet-msg").textContent="";renderSheet();sheet.showModal();
+}
+function roomOpts(cur){return "<option value=''>Not placed</option>"+S.rooms.map(function(r){var k=r.Home+"|"+r.Room;return "<option value='"+esc(k)+"'"+(k===cur?" selected":"")+">"+esc(r.Home+" · "+r.Room+" ("+r.Beds+")")+"</option>"}).join("")}
+function cell(r,ri,c,ci){var a=" data-r='"+ri+"' data-c='"+ci+"'",v=r.d[c.k];
+  if(c.k==="room")return "<select"+a+">"+roomOpts(r.d.Room?r.d.Home+"|"+r.d.Room:"")+"</select>";
+  if(c.k==="Travel")return "<select"+a+"><option value=''></option>"+TRAVEL.map(function(t){return "<option"+(t===v?" selected":"")+">"+esc(t)+"</option>"}).join("")+"</select>";
+  if(c.k==="Dietary needs"){var t=dietShort(v);return "<button type='button' class='dc"+(t?"":" empty")+"'"+a+" title='"+esc(t)+"'>"+esc(t||"Choose")+"</button>"}
+  return "<input"+a+" type='"+(c.type||(c.k==="Email"?"email":"text"))+"' value='"+esc(v||"")+"' maxlength='"+(c.k==="Celebrations and notes"?300:120)+"'>";
+}
+function renderSheet(){
+  $("#sh-head").innerHTML="<tr><th></th>"+COLS.map(function(c){return "<th style='min-width:"+c.w+"px'>"+esc(c.label||c.k)+(c.req?" <span class='req'>*</span>":"")+"</th>"}).join("")+"<th>Status</th></tr>";
+  $("#sh-body").innerHTML=R.map(function(r,ri){
+    return "<tr class='"+(r.dirty?"dirty ":"")+(r.err?"bad":"")+"'><td class='rn'>"+(ri+1)+"</td>"+COLS.map(function(c,ci){return "<td>"+cell(r,ri,c,ci)+"</td>"}).join("")+
+      "<td class='st"+(r.err?" bad":r.ok?" ok":"")+"'>"+(r.err?esc(r.err):r.ok?"Saved":r.dirty?"Not saved yet":r.id?"":"")+"</td></tr>"}).join("");
+}
+function setVal(r,k,v){v=String(v==null?"":v).trim();
+  if(k==="room"){var rk=v.split("|");r.d.Home=rk[1]?rk[0]:"";r.d.Room=rk[1]||""}
+  else r.d[k]=v;
+  r.dirty=true;r.ok=false;r.err="";
+}
+function markRow(ri){var tr=$("#sh-body").children[ri];if(!tr)return;var r=R[ri];tr.className=(r.dirty?"dirty ":"")+(r.err?"bad":"");var st=tr.lastElementChild;st.className="st";st.textContent=r.dirty?"Not saved yet":""}
+$("#sh-body").addEventListener("input",function(e){var t=e.target;if(t.dataset.r==null)return;var ri=+t.dataset.r;setVal(R[ri],COLS[+t.dataset.c].k,t.value);markRow(ri)});
+$("#sh-body").addEventListener("change",function(e){var t=e.target;if(t.tagName!=="SELECT")return;var ri=+t.dataset.r;setVal(R[ri],COLS[+t.dataset.c].k,t.value);markRow(ri)});
+$("#sh-body").addEventListener("keydown",function(e){var t=e.target;if(e.key!=="Enter"||t.tagName!=="INPUT")return;e.preventDefault();
+  var nx=$("#sh-body").querySelector("[data-r='"+(+t.dataset.r+1)+"'][data-c='"+t.dataset.c+"']");if(nx)nx.focus()});
+$("#sh-body").addEventListener("paste",function(e){var t=e.target;if(t.dataset.r==null)return;
+  var txt=(e.clipboardData||window.clipboardData).getData("text");if(!/[\t\n]/.test(txt.replace(/\n$/,"")))return;
+  e.preventDefault();var n=fillFrom(parseTable(txt),+t.dataset.r,+t.dataset.c);renderSheet();$("#sheet-msg").textContent=n+" row"+(n===1?"":"s")+" filled in. Check them, then save."});
+$("#sheet-more").addEventListener("click",function(){for(var i=0;i<5;i++)R.push(blankRow());renderSheet()});
+
+/* Dietary cell opens the same checklist as the form */
+var dietDlg=$("#dietdlg"),dietRow=-1;
+$("#sh-body").addEventListener("click",function(e){var t=e.target.closest("button.dc");if(!t)return;dietRow=+t.dataset.r;var r=R[dietRow];
+  $("#diet-title").textContent="Dietary needs"+(r.d["First name"]?" for "+r.d["First name"]:"");$("#diet-pop").innerHTML=dietHTML(r.d["Dietary needs"]);dietDlg.showModal()});
+$("#diet-cancel").addEventListener("click",function(){dietDlg.close()});
+$("#diet-ok").addEventListener("click",function(){var r=R[dietRow];if(r){setVal(r,"Dietary needs",dietRead($("#diet-pop")));r.d.Allergy=hasAllergy(r.d["Dietary needs"])?"Yes":""}dietDlg.close();renderSheet()});
+
+/* ---------- Reading a pasted list ---------- */
+function parseTable(txt){txt=String(txt||"").replace(/\r\n?/g,"\n").replace(/\n+$/,"");if(!txt)return [];
+  if(txt.indexOf("\t")>=0||txt.indexOf(",")<0)return txt.split("\n").map(function(l){return l.split("\t")});
+  var rows=[],row=[],f="",q=false;for(var i=0;i<txt.length;i++){var ch=txt[i];
+    if(q){if(ch==='"'){if(txt[i+1]==='"'){f+='"';i++}else q=false}else f+=ch}
+    else if(ch==='"')q=true;else if(ch===","){row.push(f);f=""}else if(ch==="\n"){row.push(f);rows.push(row);row=[];f=""}else f+=ch}
+  row.push(f);rows.push(row);return rows;
+}
+function headerKey(h){h=normd(h).replace(/[^a-z ]/g,"");if(!h)return null;
+  if(/allerg/.test(h))return "allergy";
+  if(/diet|food|meal pref/.test(h))return "Dietary needs";
+  if(/e ?mail/.test(h))return "Email";
+  if(/^first|given|preferred name/.test(h))return "First name";
+  if(/^last|surname|family name/.test(h))return "Last name";
+  if(/^(full )?name$|guest name|^guest$|attendee/.test(h))return "full";
+  if(/mobile|cell|phone/.test(h))return "Mobile";
+  if(/room/.test(h))return "room";
+  if(/flight|airport/.test(h))return "Flight";
+  if(/time/.test(h))return "Arrival time";
+  if(/depart|check ?out|leav/.test(h))return "Departure date";
+  if(/arriv|check ?in/.test(h))return "Arrival date";
+  if(/travel|getting here|how/.test(h))return "Travel";
+  if(/access|mobility/.test(h))return "Accessibility";
+  if(/celebrat|note|anything|comment|request/.test(h))return "Celebrations and notes";
+  return null;
+}
+function isoDate(v){v=String(v||"").trim();if(!v)return "";var m,y=(C.arrive||"").slice(0,4)||String(new Date().getFullYear());
+  if((m=v.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/)))return m[1]+"-"+("0"+m[2]).slice(-2)+"-"+("0"+m[3]).slice(-2);
+  if((m=v.match(/^(\d{1,2})[\/.-](\d{1,2})(?:[\/.-](\d{2,4}))?$/))){var yy=m[3]?(m[3].length===2?"20"+m[3]:m[3]):y;return yy+"-"+("0"+m[1]).slice(-2)+"-"+("0"+m[2]).slice(-2)}
+  var wd=DOW.findIndex(function(d){return normd(v).indexOf(d.toLowerCase().slice(0,3))===0});
+  if(wd>=0&&C.arrive){var d=pd(C.arrive),end=pd(C.depart)||d;for(var x=new Date(d);x<=end;x.setDate(x.getDate()+1))if(x.getDay()===wd)return x.getFullYear()+"-"+("0"+(x.getMonth()+1)).slice(-2)+"-"+("0"+x.getDate()).slice(-2)}
+  var t=Date.parse(v+" "+y);if(!isNaN(t)){var z=new Date(t);return z.getFullYear()+"-"+("0"+(z.getMonth()+1)).slice(-2)+"-"+("0"+z.getDate()).slice(-2)}
+  return "";
+}
+function matchRoom(v){var n=normd(v);if(!n)return "";var r=S.rooms.find(function(r){return normd(r.Room)===n||normd(r.Home+" "+r.Room)===n||normd(r.Home+" · "+r.Room)===n})||S.rooms.find(function(r){return n.indexOf(normd(r.Room))>=0});return r?r.Home+"|"+r.Room:""}
+function matchTravel(v){var n=normd(v);if(!n)return "";var ex=TRAVEL.find(function(t){return normd(t)===n});if(ex)return ex;
+  if(/driv|car\b|own car/.test(n)&&!/fly|flight|plane/.test(n))return "Driving";
+  if(/fly|flight|plane|air/.test(n))return /rent/.test(n)?TRAVEL[1]:/ride|group|shuttle|carpool/.test(n)?TRAVEL[2]:"";
+  return "Other";}
+function putVal(r,k,v){v=String(v==null?"":v).trim();if(!v&&k!=="room")return;
+  if(k==="full"){var p=v.split(/\s+/);setVal(r,"First name",p.shift());setVal(r,"Last name",p.join(" "));return}
+  if(k==="room"){var rk=matchRoom(v);if(rk)setVal(r,"room",rk);return}
+  if(k==="Travel"){var t=matchTravel(v);if(t)setVal(r,"Travel",t);else if(!r.d.Flight)setVal(r,"Flight",v);return}
+  if(k==="Arrival date"||k==="Departure date"){var d=isoDate(v);if(d)setVal(r,k,d);return}
+  if(k==="Dietary needs"||k==="allergy"){if(k==="allergy"&&/^(none|no|n\/?a|nope)$/i.test(v))return;
+    if(k==="allergy"&&!/allerg/i.test(v)){var parts=v.split(/[,;\/\n]+|\band\b/).map(function(t){return t.trim()}).filter(Boolean),extra=[];
+      v=parts.map(function(t){var n=normd(t).replace(/s$/,"").replace(/^tree nut$/,"nut");var o=DIET_ALG.find(function(x){return normd(x)===n+" allergy"});if(o)return o;extra.push(t);return ""}).filter(Boolean).join(", ")+(extra.length?". Details: Allergy: "+extra.join(", "):"")}
+    var cur=dietParse(r.d["Dietary needs"]),add=dietParse(v);
+    add.picked.forEach(function(x){if(cur.picked.indexOf(x)<0)cur.picked.push(x)});if(cur.picked.length>1)cur.picked=cur.picked.filter(function(x){return x!=="None"});
+    setVal(r,"Dietary needs",dietStr(cur.picked,[cur.det,add.det].filter(Boolean).join(". ")));r.d.Allergy=hasAllergy(r.d["Dietary needs"])?"Yes":"";return}
+  setVal(r,k,v);
+}
+function firstEmpty(){for(var i=0;i<R.length;i++)if(!R[i].id&&!hasContent(R[i]))return i;R.push(blankRow());return R.length-1}
+function fillFrom(rows,r0,c0){if(!rows.length)return 0;
+  var map=rows[0].map(headerKey),known=map.filter(Boolean).length,n=0;
+  if(known>=2){rows=rows.slice(1);r0=firstEmpty()}else map=null;
+  rows.forEach(function(cells,j){if(!cells.some(function(x){return String(x).trim()}))return;
+    var ri=map?firstEmpty():r0+n;while(R.length<=ri)R.push(blankRow());
+    var r=R[ri];cells.forEach(function(v,i){var k=map?map[i]:(COLS[c0+i]||{}).k;if(k)putVal(r,k,v)});n++});
+  return n;
+}
+
+/* ---------- Saving the spreadsheet ---------- */
+function rowErr(r){var m=[];if(!r.d["First name"])m.push("first name");if(!r.d["Last name"])m.push("last name");if(!EMAIL_RE.test(r.d.Email||""))m.push("email");return m.length?"Needs "+m.join(", "):""}
+function saveSheet(){if(SAVING)return;
+  var todo=R.filter(function(r){return r.dirty&&hasContent(r)}),bad=0;
+  R.forEach(function(r){r.err=r.dirty&&hasContent(r)?rowErr(r):""});
+  var cnt={};R.forEach(function(r){if(!hasContent(r)||!r.d.Room)return;var k=r.d.Home+"|"+r.d.Room;cnt[k]=(cnt[k]||0)+1});
+  R.forEach(function(r){if(!r.d.Room||!hasContent(r))return;var rm=S.rooms.find(function(x){return x.Home===r.d.Home&&x.Room===r.d.Room});
+    if(rm&&cnt[r.d.Home+"|"+r.d.Room]>Number(rm.Sleeps)&&r.dirty&&!r.err)r.err=r.d.Room+" sleeps "+rm.Sleeps+". Choose another room."});
+  bad=R.filter(function(r){return r.err}).length;
+  if(bad){renderSheet();$("#sheet-msg").textContent=bad+" row"+(bad===1?" needs":"s need")+" a fix before saving.";return}
+  if(!todo.length){$("#sheet-msg").textContent="No changes to save.";return}
+  SAVING=true;var btn=$("#sheet-save");btn.disabled=true;var i=0,okN=0;
+  (function next(){
+    if(i>=todo.length){SAVING=false;btn.disabled=false;render();renderSheet();
+      var failed=todo.length-okN;$("#sheet-msg").textContent=failed?"Saved "+okN+". "+failed+" didn't save; see the Status column.":"Saved "+okN+" guest"+(okN===1?"":"s")+". Your event team can see them now.";return}
+    var r=todo[i++];$("#sheet-msg").textContent="Saving "+i+" of "+todo.length+"…";
+    var g={};SEND.forEach(function(k){g[k]=r.d[k]==null?"":r.d[k]});g.Allergy=hasAllergy(g["Dietary needs"])?"Yes":"";if(r.id)g.id=r.id;
+    var known=S.guests.map(function(x){return x.id});
+    api("POST",{key:C.key,action:"save",by:who(),guest:g}).then(function(d){
+      if(!d||!d.ok){r.err=d&&d.error==="room_full"?"That room is full. Choose another.":d&&d.error==="closed"?"Your guest list has closed.":"Didn't save. Try again.";
+        if(d&&d.error==="closed"){S.group.open=false;i=todo.length}next();return}
+      S=d;if(!r.id){var ng=S.guests.find(function(x){return known.indexOf(x.id)<0});if(ng)r.id=ng.id}
+      r.dirty=false;r.ok=true;okN++;next();
+    }).catch(function(){r.err="Couldn't reach The Farm. Try again.";next()});
+  })();
+}
+function closeSheet(){if(SAVING)return;if(R.some(function(r){return r.dirty&&hasContent(r)})&&!confirm("You have changes that aren't saved. Close anyway?"))return;sheet.close()}
+$("#sheet-save").addEventListener("click",saveSheet);
+$("#sheet-cancel").addEventListener("click",closeSheet);$("#sheet-x").addEventListener("click",closeSheet);
+sheet.addEventListener("cancel",function(e){e.preventDefault();closeSheet()});
+$("#sheet-open").addEventListener("click",openSheet);
+
+/* ---------- Paste your list ---------- */
+var pasteDlg=$("#pastedlg");
+$("#paste-open").addEventListener("click",function(){if(!who()){openWho(function(){$("#paste-open").click()});return}$("#paste-txt").value="";$("#paste-err").textContent="";pasteDlg.showModal()});
+pasteDlg.querySelectorAll("[data-pclose]").forEach(function(b){b.addEventListener("click",function(){pasteDlg.close()})});
+$("#paste-go").addEventListener("click",function(){var rows=parseTable($("#paste-txt").value);
+  if(!rows.length){$("#paste-err").textContent="Paste your list first.";return}
+  var known=rows[0].map(headerKey).filter(Boolean).length;
+  if(known<2){$("#paste-err").textContent="Include the header row (First name, Last name, Email…) so we can match your columns.";return}
+  pasteDlg.close();openSheet();var n=fillFrom(rows,0,0);renderSheet();
+  $("#sheet-msg").textContent=n+" guest"+(n===1?"":"s")+" added from your list. Check them, choose rooms, then save.";});
+
+/* ---------- Questions for your group ---------- */
+var askDlg=$("#askdlg");
+var TPL=["First name","Last name","Email","Mobile","Arrival date","Arrival time","How you're traveling","Airport and flight","Dietary needs","Food allergies","Accessibility needs","Celebrations or notes"];
+function askText(){var a=C&&C.arrive?nice(C.arrive,true):"[arrival date]",d=C&&C.depart?nice(C.depart,true):"[departure date]";
+  return "We're heading to The Horse Shoe Farm in Hendersonville, NC, "+a+" to "+d+". To get everything ready, please send me:\n\n"+
+  "1. Your first and last name\n2. Your email\n3. Your mobile number\n4. The day you'll arrive and about what time (check-in is from 4:00 pm)\n"+
+  "5. How you're traveling: driving, or flying (and your airport and flight)\n"+
+  "6. Dietary needs: vegetarian, vegan, pescatarian, gluten free, dairy free, no pork, no red meat, kosher style, halal, or none\n"+
+  "7. Any food allergies, and how serious they are\n8. Any accessibility needs\n9. Anything we're celebrating, like a birthday or anniversary";}
+$("#ask-group").addEventListener("click",function(){$("#ask-text").textContent=askText();$("#ask-msg").textContent="";askDlg.showModal()});
+askDlg.querySelectorAll("[data-aclose]").forEach(function(b){b.addEventListener("click",function(){askDlg.close()})});
+$("#ask-copy").addEventListener("click",function(){var t=askText();
+  (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){$("#ask-msg").textContent="Copied. Paste it into your email or message."})
+  .catch(function(){var r=document.createRange();r.selectNodeContents($("#ask-text"));var s=getSelection();s.removeAllRanges();s.addRange(r);$("#ask-msg").textContent="Selected. Press Ctrl+C or Cmd+C to copy."})});
+$("#ask-tpl").addEventListener("click",function(){
+  var csv="﻿"+TPL.map(function(h){return '"'+h.replace(/"/g,'""')+'"'}).join(",")+"\r\n";
+  var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download=((C&&C.shortName)||"Group").replace(/[^\w ]/g,"")+" guest details.csv";document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},500);
+  $("#ask-msg").textContent="Template downloaded. Open it in Excel or Google Sheets.";});
+
+/* ---------- Notes about the group ---------- */
+var nf=$("#notes-form"),NOTES_DIRTY=false;
+function fillNotes(){var n=(S&&S.group&&S.group.notes)||{};if(NOTES_DIRTY)return;
+  ["about","needs","other"].forEach(function(k){nf.elements[k].value=n[k]||"";nf.elements[k].disabled=!S.group.open});
+  $("#notes-save").hidden=!S.group.open;
+  $("#notes-msg").textContent=n.updated?"Last saved "+n.updated:"";}
+nf.addEventListener("input",function(){NOTES_DIRTY=true;$("#notes-msg").textContent="Not saved yet"});
+nf.addEventListener("submit",function(e){e.preventDefault();
+  if(!who()){openWho(function(){nf.requestSubmit()});return}
+  var notes={about:nf.elements.about.value,needs:nf.elements.needs.value,other:nf.elements.other.value},btn=$("#notes-save");
+  btn.disabled=true;$("#notes-msg").textContent="Saving…";
+  if(PREVIEW){S.group.notes=Object.assign({},notes,{updated:"just now by "+who()});NOTES_DIRTY=false;btn.disabled=false;fillNotes();return}
+  api("POST",{key:C.key,action:"notes",by:who(),notes:notes}).then(function(d){btn.disabled=false;
+    if(!d||!d.ok){$("#notes-msg").textContent=d&&d.error==="closed"?"Your guest list has closed. Call or email us with anything new.":"That didn't save. Try again in a moment.";return}
+    S=d;NOTES_DIRTY=false;render();$("#notes-msg").textContent="Saved. Your event team can see it now.";
+  }).catch(function(){btn.disabled=false;$("#notes-msg").textContent="We couldn't reach The Farm just now. Try again in a moment."});
+});
 })();
 </script>
 
